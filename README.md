@@ -1,0 +1,2 @@
+# MagicNotes
+Magic notes project
