@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:magic_notes/utils/style.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -7,10 +8,6 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text("Configuration"),
-      ),
       body: Center(
         child: FutureBuilder(
           future: Future.delayed(
@@ -42,10 +39,18 @@ class SplashScreen extends StatelessWidget {
                 if (snapshot.connectionState != ConnectionState.done) {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(Icons.check),
-                      SizedBox(height: 15),
-                      Text("Device Configured Successfully!"),
+                    children: [
+                      Image.asset('assets/app_icon.png'),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "MAGICNOTES",
+                        style: textHeadline1.copyWith(
+                          color: Colors.deepOrange,
+                          fontSize: 36,
+                        ),
+                      )
                     ],
                   );
                 }

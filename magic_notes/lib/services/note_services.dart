@@ -17,7 +17,7 @@ class NoteServices {
     DataResponse? dataResponse;
     try {
       // print("Dữ liệu vào: $userId");
-      Response response = await dio.get("$BASE_URL/notes?userid=$userId");
+      Response response = await dio.get("$BASE_URL/notes?userid=$userId&&sort=dsc");
       //print(response.data);
 
       dataResponse = DataResponse.fromJson(response.data);

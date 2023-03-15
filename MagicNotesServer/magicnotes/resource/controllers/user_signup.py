@@ -34,8 +34,8 @@ class UserSignUp(Resource):
             # Thêm vào cơ sở dữ liệu
             new_user = User(uuid.uuid4().hex, user_email, user_name, user_description)
             user_ref.document(new_user.user_id).set(new_user.json)
-            return Response(201, "success", "null", "Create user successful!").json
+            return Response(201, "success", "null", "Create user successful!").json, 201
         except Exception as e:
             error_json = e.args[1]
             error = json.loads(error_json)['error']
-            return Response(400, "error", "null", error).json
+            return Response(400, "error", "null", error).json, 400

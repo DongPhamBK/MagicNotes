@@ -17,11 +17,11 @@ class UserController(Resource):
             user_id = request.args.get('userid')
             user = user_ref.document(user_id).get().to_dict()
             if user is not None:
-                return Response(200, "success", user, f"User information of user_id: {user_id}").json
-            return Response(400, "fail", user, f"Cannot find user information of user_id: {user_id}").json
+                return Response(200, "success", user, f"User information of user_id: {user_id}").json, 200
+            return Response(400, "fail", user, f"Cannot find user information of user_id: {user_id}").json, 400
 
         except Exception as e:
-            return Response(400, "error", "null", str(e)).json
+            return Response(400, "error", "null", str(e)).json, 400
 
     # Thay đổi thông tin user
     def post(self, user_ref=user_ref):
@@ -31,7 +31,7 @@ class UserController(Resource):
             user_name = data['userName']
             user_description = data['userDescription']
             user_ref.document(user_id).set({'userName': user_name, 'userDescription': user_description}, merge=True)
-            return Response(200, "success", "null", "Change user information successful!").json
+            return Response(200, "success", "null", "Change user information successful!").json, 200
 
         except Exception as e:
-            return Response(400, "error", "null", str(e)).json
+            return Response(400, "error", "null", str(e)).json, 400

@@ -26,9 +26,9 @@ class UserChangePassword(Resource):
             # Reset password
             auth.send_password_reset_email(user_email)
 
-            return Response(200, "success", "null", "Reset password successful!").json
+            return Response(200, "success", "null", "Reset password successful!").json, 200
         except Exception as e:
-            return Response(400, "error", "null", str(e)).json
+            return Response(400, "error", "null", str(e)).json, 400
 
     # Đổi mật khẩu
     def put(self, auth=admin_auth):
@@ -49,11 +49,11 @@ class UserChangePassword(Resource):
                     email_verified=True,
                     password=user_password
                 )
-                return Response(200, "success", "null", "Update password successful!!").json
+                return Response(200, "success", "null", "Update password successful!!").json, 200
             else:
-                return Response(205, "fail", "null", "Password confirm not true!!").json
+                return Response(205, "fail", "null", "Password confirm not true!!").json, 205
 
         except Exception as e:
             error_json = e.args[1]
             error = json.loads(error_json)['error']
-            return Response(400, "error", "null", error).json
+            return Response(400, "error", "null", error).json, 400
