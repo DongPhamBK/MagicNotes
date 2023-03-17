@@ -18,44 +18,45 @@ class ChangeUserInfoScreen extends ConsumerWidget {
     Key? key,
   }) : super(key: key);
 
+  TextEditingController userNameController = TextEditingController();
+  TextEditingController userDescriptionController = TextEditingController();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     //var dataResponse = ref.watch(userProvider).dataResponse;
     var isLoading = ref.watch(userProvider).isLoading;
 
-    TextEditingController userNameController = TextEditingController();
     userNameController.text = userName!;
-    TextEditingController userDescriptionController = TextEditingController();
     userDescriptionController.text = userDescription!;
     print("ChangePasswordScreen build");
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.orange,
-          title: const Text("Đổi thông tin người dùng"),
+          title: Text("Đổi thông tin người dùng"),
         ),
         body: Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/background.png'),
               fit: BoxFit.cover,
             ),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(8.0),
             child: SizedBox(
               height: MediaQuery.of(context).size.height - 10,
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: 10,
                     ),
                     Text(
                       "Thay đổi tên tài khoản:",
                       style: textHeadline1.copyWith(color: Colors.deepOrange),
                     ),
-                    const SizedBox(
+                    SizedBox(
                       height: 20,
                     ),
                     SizedBox(
@@ -64,7 +65,7 @@ class ChangeUserInfoScreen extends ConsumerWidget {
                         maxLength: 100,
                         keyboardType: TextInputType.text,
                         controller: userNameController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Tên người dùng',
                           hintText: 'Nhập tên người dùng mới',
@@ -72,13 +73,18 @@ class ChangeUserInfoScreen extends ConsumerWidget {
                         ),
                       ),
                     ),
+                    Text(
+                      "Thay đổi mô tả:",
+                      style: textHeadline1.copyWith(color: Colors.deepOrange),
+                    ),
                     SizedBox(
                       width: 500,
                       child: TextField(
                         maxLength: 100,
+                        maxLines: 5,
                         keyboardType: TextInputType.text,
                         controller: userDescriptionController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Mô tả',
                           hintText: 'Nhập mô tả người dùng mới',
@@ -86,7 +92,7 @@ class ChangeUserInfoScreen extends ConsumerWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(
+                    SizedBox(
                       height: 10,
                     ),
                     SizedBox(
@@ -107,32 +113,29 @@ class ChangeUserInfoScreen extends ConsumerWidget {
                           ref.read(userProvider).changeUserInfo(USER_ID, userName, userDescription).then((value) async {
                             if (value!.code == 200) {
                               await Future.delayed(Duration(milliseconds: 500)).then((value) => showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return dialogNotification(context, "KẾT QUẢ", "Đổi thông tin người dùng thành công!");
-                                },
-                              ));
-
+                                    context: context,
+                                    builder: (context) {
+                                      return dialogNotification(context, "KẾT QUẢ", "Đổi thông tin người dùng thành công!");
+                                    },
+                                  ));
                             } else {
                               await Future.delayed(Duration(milliseconds: 500)).then((value) => showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return dialogNotification(context, "KẾT QUẢ", "Đổi thông tin người dùng thất bại!");
-                                },
-                              ));
-
+                                    context: context,
+                                    builder: (context) {
+                                      return dialogNotification(context, "KẾT QUẢ", "Đổi thông tin người dùng thất bại!");
+                                    },
+                                  ));
                             }
                           }).then((value) {
                             context.pop();
                             context.pop();
                           });
                           //context.pop();
-
                         }
                       },
                     ),
-                    if (isLoading) const CircularProgressIndicator(color: Colors.orange) else const SizedBox(),
-                    const SizedBox(
+                    if (isLoading) CircularProgressIndicator(color: Colors.orange) else SizedBox(),
+                    SizedBox(
                       height: 100,
                     )
                   ],

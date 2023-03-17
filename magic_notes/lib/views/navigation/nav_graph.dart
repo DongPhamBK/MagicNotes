@@ -33,7 +33,7 @@ final GoRouter router = GoRouter(
       path: '/signup',
       builder: (context, state) {
         GLOBAL_CONTEXT = context;
-        return const SignUpScreen();
+        return SignUpScreen();
       },
     ),
     GoRoute(
@@ -42,8 +42,8 @@ final GoRouter router = GoRouter(
       builder: (context, state) {
         GLOBAL_CONTEXT = context;
         return HomeScreen(
-        userId: state.params['userId'],
-      );
+          userId: state.params['userId'],
+        );
       },
     ),
     GoRoute(
@@ -58,7 +58,7 @@ final GoRouter router = GoRouter(
       path: '/addnote',
       builder: (context, state) {
         GLOBAL_CONTEXT = context;
-        return const AddNoteScreen();
+        return AddNoteScreen();
       },
     ),
     GoRoute(
@@ -81,7 +81,7 @@ final GoRouter router = GoRouter(
       path: '/forgetpass',
       builder: (context, state) {
         GLOBAL_CONTEXT = context;
-        return const ForgotPasswordScreen();
+        return ForgotPasswordScreen();
       },
     ),
     GoRoute(
@@ -90,9 +90,9 @@ final GoRouter router = GoRouter(
       builder: (context, state) {
         GLOBAL_CONTEXT = context;
         return ChangeUserInfoScreen(
-        userName: state.params['userName'],
-        userDescription: state.params['userDescription'],
-      );
+          userName: state.params['userName'],
+          userDescription: state.params['userDescription'],
+        );
       },
     ),
   ],

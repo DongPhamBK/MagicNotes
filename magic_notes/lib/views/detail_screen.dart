@@ -35,7 +35,7 @@ class DetailScreen extends ConsumerWidget {
         actions: <Widget>[
           IconButton(
             padding: EdgeInsets.only(right: 20),
-            icon: const Icon(
+            icon: Icon(
               Icons.delete,
               color: Colors.white,
             ),
@@ -57,72 +57,106 @@ class DetailScreen extends ConsumerWidget {
         ],
       ),
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/background.png'),
             fit: BoxFit.cover,
           ),
         ),
-        child: SingleChildScrollView(
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Stack(
+              fit: StackFit.expand,
+              //mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Positioned(
+                  top: 0,
+                  child: SizedBox(
                     height: 20,
                   ),
-                  Text(
-                    "Nội dung",
-                    style: textHeadline1.copyWith(color: Colors.deepOrange),
+                ),
+                Positioned(
+                  top: 20,
+                  left: 0,
+                  right: 0,
+                  child: Center(
+                    child: Text(
+                      "Nội dung",
+                      style: textHeadline1.copyWith(color: Colors.deepOrange, fontSize: 18),
+                    ),
                   ),
-                  SizedBox(
-                    width: Platform.isAndroid || Platform.isIOS ? MediaQuery.of(context).size.width - 10 :500,
-                    height: MediaQuery.of(context).size.height - 260,
-                    child: SingleChildScrollView(
-                      child: TextField(
-                        //expands: true, //Mở rộng tối đa
-                        textAlign: TextAlign.left,
-                        keyboardType: TextInputType.multiline,
-                        maxLines: 100,
-                        enabled: false,
-                        controller: noteDescriptionController,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'Nhập nội dung ghi chú của bạn!',
+                ),
+                Positioned(
+                  top: 50,
+                  left: 0,
+                  right: 0,
+                  bottom: 160,
+                  child: Center(
+                    child: SizedBox(
+                      width: Platform.isAndroid || Platform.isIOS ? MediaQuery.of(context).size.width - 10 : 500,
+                      child: SingleChildScrollView(
+                        //reverse: true, // Xem ngược
+                        child: TextField(
+                          //expands: true, //Mở rộng tối đa
+                          textAlign: TextAlign.left,
+                          keyboardType: TextInputType.multiline,
+                          maxLines: 50,
+                          enabled: false,
+                          controller: noteDescriptionController,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: 'Nhập nội dung ghi chú của bạn!',
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 1,
+                ),
+                Positioned(
+                  bottom: 80,
+                  left: 0,
+                  right: 0,
+                  child: Center(
+                    child: SizedBox(
+                      width: 500,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Trạng thái hiện tại: ${note.noteState?.toVietnamese()}",
+                            style: textContent.copyWith(color: Colors.black),
+                          ),
+                          //noteState,
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "Thời gian tạo(sửa) ghi chú:\n ${note.noteCreatedTime}",
+                            style: textContent.copyWith(color: Colors.black),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Trạng thái hiện tại: ${note.noteState}",
-                        style: textContent.copyWith(color: Colors.black),
-                      ),
-                      //noteState,
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Thời gian tạo(sửa) ghi chú: ${note.noteCreatedTime}",
-                        style: textContent.copyWith(color: Colors.black),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
+                ),
+                Positioned(
+                  bottom: 40,
+                  child: SizedBox(
                     height: 20,
                   ),
-                  buttonText("Cập nhật ghi chú", () {
-                    context.pushNamed('/updatenote', extra: note);
-                  }),
-                ],
-              ),
+                ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 20,
+                  child: Center(
+                    child: buttonText("Cập nhật ghi chú", () {
+                      context.pushNamed('/updatenote', extra: note);
+                    }),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

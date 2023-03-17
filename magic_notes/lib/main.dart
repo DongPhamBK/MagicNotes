@@ -12,32 +12,33 @@ void main() async {
   //Tương tác chỉ dùng cho Windows
   if (Platform.isWindows) {
     await windowManager.ensureInitialized();
-    WindowManager.instance.setMinimumSize(const Size(600, 760));
-    WindowOptions windowOptions = const WindowOptions(size: Size(600, 760), title: "Magic Notes", titleBarStyle: TitleBarStyle.normal);
+    WindowManager.instance.setMinimumSize(  Size(600, 760));
+    WindowOptions windowOptions =   WindowOptions(size: Size(600, 760), title: "Magic Notes", titleBarStyle: TitleBarStyle.normal);
     windowManager.waitUntilReadyToShow(windowOptions, () async {
       await windowManager.show();
       await windowManager.focus();
     });
-    runApp(const ProviderScope(child: MyAppWindows()));
+    runApp(  ProviderScope(child: MyAppWindows()));
   } else {
-    runApp(const ProviderScope(child: MyApp()));
+    runApp(  ProviderScope(child: MyApp()));
   }
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+    MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: router,
+      theme: ThemeData(fontFamily: 'NotoSerif'),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
 class MyAppWindows extends StatefulWidget {
-  const MyAppWindows({Key? key}) : super(key: key);
+    MyAppWindows({Key? key}) : super(key: key);
 
   @override
   State<MyAppWindows> createState() => _MyAppWindowsState();
@@ -73,8 +74,8 @@ class _MyAppWindowsState extends State<MyAppWindows> with WindowListener {
 
   @override
   void onWindowClose() async {
-    bool _isPreventClose = await windowManager.isPreventClose();
-    if (_isPreventClose) {
+    bool isPreventClose = await windowManager.isPreventClose();
+    if (isPreventClose) {
       showDialog(
         context: GLOBAL_CONTEXT!,
         builder: (_) {
@@ -86,7 +87,7 @@ class _MyAppWindowsState extends State<MyAppWindows> with WindowListener {
             content: Text('Bạn muốn thoát ứng dụng, bạn sẽ phải đăng nhập lại!'),
             actions: [
               TextButton(
-                child: const Text(
+                child:  Text(
                   "Trở lại ứng dụng",
                   style: textHeadline1,
                 ),
@@ -95,7 +96,7 @@ class _MyAppWindowsState extends State<MyAppWindows> with WindowListener {
                 },
               ),
               TextButton(
-                child: const Text(
+                child:  Text(
                   "Đã hiểu",
                   style: textHeadline1,
                 ),

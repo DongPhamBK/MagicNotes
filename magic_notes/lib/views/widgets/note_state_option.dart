@@ -18,47 +18,31 @@ class NoteStateOption extends StatefulWidget {
   }
 
   setState(String state) {
-    noteStates.forEach((element) {
+    for (var element in noteStates) {
       if (element == state) {
         currentState = element;
       }
-    });
+    }
   }
 }
 
 class _NoteStateOptionState extends State<NoteStateOption> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: getWith(),
-      height: 65,
-      child: ListView.builder(
-        itemBuilder: (context, index) {
-          return Row(
-            children: [
-              Container(
-                color: Colors.white,
-                width: getWith()/3,
-                height: 65,
-                child: RadioListTile(
-                  title: Text(noteStateTitles[index]),
-                  value: noteStates[index],
-                  groupValue: widget.currentState,
-                  onChanged: (value) {
-                    setState(() {
-                      widget.currentState = value.toString();
-                    });
-                  },
-                ),
-              ),
-              const SizedBox(
-                width: 1,
-              ),
-            ],
-          );
-        },
-        itemCount: noteStates.length,
-        scrollDirection: Axis.horizontal,
+    return Container(
+      // decoration: BoxDecoration(
+      //   borderRadius: BorderRadius.circular(10),
+      // ),
+      height: 125,
+      width: getWith() + 20,
+      child: Center(
+        child: ListView.builder(
+          itemBuilder: (context, index) {
+            return Platform.isWindows ? noteStateOptionWindows(index): noteStateOption(index);
+          },
+          itemCount: noteStates.length,
+          scrollDirection: Platform.isWindows? Axis.horizontal : Axis.vertical,
+        ),
       ),
     );
   }
@@ -74,5 +58,51 @@ class _NoteStateOptionState extends State<NoteStateOption> {
         return width - 10;
       }
     }
+  }
+
+  Widget noteStateOptionWindows(int index){
+    return Center(
+      child: Row(
+        children: [
+          Container(
+            color: Colors.white,
+            width: getWith()/3,
+            height: 75,
+            child: RadioListTile(
+              title: Text(noteStateTitles[index]),
+              value: noteStates[index],
+              groupValue: widget.currentState,
+              onChanged: (value) {
+                setState(() {
+                  widget.currentState = value.toString();
+                });
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  Widget noteStateOption(int index){
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          color: Colors.white,
+          height: 39,
+          child: RadioListTile(
+            title: Text(noteStateTitles[index], style: TextStyle(fontSize: 12),),
+            value: noteStates[index],
+            groupValue: widget.currentState,
+            onChanged: (value) {
+              setState(() {
+                widget.currentState = value.toString();
+              });
+            },
+          ),
+        ),
+      ],
+    );
   }
 }

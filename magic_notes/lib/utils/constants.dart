@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 
 class Constants {
-  static const BASE_URL = "http://192.168.1.183:5000/v1";
+  static const BASE_URL = "https://dongpt.pythonanywhere.com/v1";
 }
 
 final options = BaseOptions(
@@ -24,3 +24,16 @@ String USER_ID = "";
 
 //Quá gắt
 BuildContext? GLOBAL_CONTEXT = null;
+
+extension convert on String {
+  String toVietnamese() {
+    switch (this) {
+      case "Unstarted":
+        return "Chưa bắt đầu";
+      case "In Process":
+        return "Đang tiến hành";
+      default:
+        return "Xong";
+    }
+  }
+}

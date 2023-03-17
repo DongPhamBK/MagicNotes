@@ -28,31 +28,31 @@ class ChangePasswordScreen extends ConsumerWidget {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.orange,
-          title: const Text("Đổi mật khẩu"),
+          title:   Text("Đổi mật khẩu"),
         ),
         body: Container(
           height:MediaQuery.of(context).size.height,
-          decoration: const BoxDecoration(
+          decoration:   BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/background.png'),
               fit: BoxFit.cover,
             ),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding:   EdgeInsets.all(8.0),
             child: SingleChildScrollView(
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox(
+                      SizedBox(
                       height: 20,
                     ),
                     Text(
                       "Thay đổi mật khẩu tài khoản MagicNotes của bạn!",
                       style: textHeadline1.copyWith(color: Colors.deepOrange),
                     ),
-                    const SizedBox(
+                      SizedBox(
                       height: 50,
                     ),
                     SizedBox(
@@ -62,14 +62,14 @@ class ChangePasswordScreen extends ConsumerWidget {
                         keyboardType: TextInputType.text,
                         enabled: false,
                         controller: TextEditingController(text: userEmail),
-                        decoration: const InputDecoration(
+                        decoration:   InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Địa chỉ email',
                           labelStyle: TextStyle(fontSize: 25),
                         ),
                       ),
                     ),
-                    const SizedBox(
+                      SizedBox(
                       height: 10,
                     ),
                     SizedBox(
@@ -80,7 +80,7 @@ class ChangePasswordScreen extends ConsumerWidget {
                         passwordController: passwordController,
                       ),
                     ),
-                    const SizedBox(
+                      SizedBox(
                       height: 20,
                     ),
                     SizedBox(
@@ -131,8 +131,8 @@ class ChangePasswordScreen extends ConsumerWidget {
                         }
                       },
                     ),
-                    if (isLoading) const CircularProgressIndicator(color: Colors.orange) else const SizedBox(),
-                    const SizedBox(
+                    if (isLoading)   CircularProgressIndicator(color: Colors.orange) else   SizedBox(),
+                      SizedBox(
                       height: 100,
                     )
                   ],

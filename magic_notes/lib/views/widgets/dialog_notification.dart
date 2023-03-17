@@ -15,7 +15,7 @@ Widget dialogNotification(BuildContext context, String title, String message) {
         onPressed: () {
           context.pop();
         },
-        child: const Text(
+        child:  Text(
           "Đã hiểu",
           style: textHeadline1,
         ),

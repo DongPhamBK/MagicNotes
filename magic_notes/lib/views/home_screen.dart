@@ -26,7 +26,7 @@ class HomeScreen extends ConsumerWidget {
         backgroundColor: Colors.orange,
         leading: Builder(
           builder: (context) => IconButton(
-            icon: const Icon(Icons.account_circle),
+            icon: Icon(Icons.account_circle),
             onPressed: () {
               //Lấy thông tin người dùng trước tiên
               ref.read(userProvider).getUserInfo(userId!);
@@ -34,7 +34,7 @@ class HomeScreen extends ConsumerWidget {
             },
           ),
         ),
-        title: const Text("MagicNotes"),
+        title: Text("MagicNotes"),
       ),
       body: Padding(
         padding: EdgeInsets.all(8.0),
@@ -70,9 +70,9 @@ class HomeScreen extends ConsumerWidget {
             }
           },
           error: (error, stackTrace) {
-            return const Center(child: Text("Có lỗi xảy ra, vui lòng chờ chút hoặc mở lại ứng dụng của bạn!"));
+            return Center(child: Text("Có lỗi xảy ra, vui lòng chờ chút hoặc mở lại ứng dụng của bạn!"));
           },
-          loading: () => const Center(child: CircularProgressIndicator(color: Colors.orange)),
+          loading: () => Center(child: CircularProgressIndicator(color: Colors.orange)),
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -83,8 +83,8 @@ class HomeScreen extends ConsumerWidget {
           },
           label: Row(
             children: [
-              const Icon(Icons.add),
-              const Text(" Thêm mới!"),
+              Icon(Icons.add),
+              Text(" Thêm mới!"),
             ],
           )),
       drawer: Drawer(

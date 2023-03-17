@@ -7,39 +7,39 @@ import 'package:magic_notes/views/widgets/dialog_notification.dart';
 import '../providers/user_provider.dart';
 
 class ForgotPasswordScreen extends ConsumerWidget {
-  const ForgotPasswordScreen({
+  ForgotPasswordScreen({
     Key? key,
   }) : super(key: key);
+
+  TextEditingController userEmailController = TextEditingController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     //var dataResponse = ref.watch(userProvider).dataResponse;
     var isLoading = ref.watch(userProvider).isLoading;
-
-    TextEditingController userEmailController = TextEditingController();
-    print("ForgotPasswordScreen build");
+    //print("ForgotPasswordScreen build");
 
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.orange,
-          title: const Text("Quên mật khẩu"),
+          title: Text("Quên mật khẩu"),
         ),
         body: Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/background.png'),
               fit: BoxFit.cover,
             ),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(8.0),
             child: SizedBox(
               height: MediaQuery.of(context).size.height - 10,
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       height: 20,
                     ),
                     SizedBox(
@@ -49,7 +49,7 @@ class ForgotPasswordScreen extends ConsumerWidget {
                         style: textContent.copyWith(color: Colors.black),
                       ),
                     ),
-                    const SizedBox(
+                    SizedBox(
                       height: 30,
                     ),
                     SizedBox(
@@ -58,7 +58,7 @@ class ForgotPasswordScreen extends ConsumerWidget {
                         maxLength: 100,
                         keyboardType: TextInputType.text,
                         controller: userEmailController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Địa chỉ email',
                           hintText: 'Nhập địa chỉ email ứng với tài khoản của bạn!',
@@ -66,7 +66,7 @@ class ForgotPasswordScreen extends ConsumerWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(
+                    SizedBox(
                       height: 20,
                     ),
                     buttonText(
@@ -100,8 +100,8 @@ class ForgotPasswordScreen extends ConsumerWidget {
                         }
                       },
                     ),
-                    if (isLoading) const CircularProgressIndicator(color: Colors.orange) else const SizedBox(),
-                    const SizedBox(
+                    if (isLoading) CircularProgressIndicator(color: Colors.orange) else SizedBox(),
+                    SizedBox(
                       height: 100,
                     )
                   ],

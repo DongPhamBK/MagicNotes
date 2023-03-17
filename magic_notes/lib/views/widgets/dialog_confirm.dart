@@ -15,7 +15,7 @@ Widget dialogConfirm(BuildContext context, String title, String message, Functio
         onPressed: () {
           callback();
         },
-        child: const Text(
+        child: Text(
           "Xác nhận",
           style: textHeadline1,
         ),

@@ -28,7 +28,7 @@ class _PasswordInputState extends State<PasswordInput> {
       obscureText: _passwordVisible,
       //This will obscure text dynamically
       decoration: InputDecoration(
-        border: const OutlineInputBorder(),
+        border: OutlineInputBorder(),
         labelText: widget.label,
         hintText: widget.hintText,
         suffixIcon: IconButton(

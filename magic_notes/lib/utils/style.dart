@@ -1,15 +1,15 @@
-import 'dart:ui';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-const textHeadline1 = TextStyle(
+TextStyle textHeadline1 = TextStyle(
   color: Colors.white,
-  fontSize: 20,
+  fontSize: Platform.isWindows ? 20 : 18,
   fontWeight: FontWeight.bold,
 );
 
-const textContent = TextStyle(
+TextStyle textContent = TextStyle(
   color: Colors.black,
-  fontSize: 18,
+  fontSize: Platform.isWindows ? 18 : 14,
   fontFamily: 'NotoSerif',
 );
