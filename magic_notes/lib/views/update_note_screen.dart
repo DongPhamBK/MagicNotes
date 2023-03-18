@@ -14,21 +14,32 @@ import '../utils/style.dart';
 
 class UpdateNoteStcreen extends ConsumerWidget {
   late Note note;
+  late TextEditingController noteTitleController;
+  late TextEditingController noteDescriptionController;
+  late NoteStateOption noteState;
 
   UpdateNoteStcreen({
     required this.note,
     Key? key,
-  }) : super(key: key);
+  }) : super(key: key) {
+    //Khởi tạo ngay constructor tránh lỗi xây dựng lại giao diện
+    noteTitleController = TextEditingController(text: note.noteTitle!);
+    noteDescriptionController = TextEditingController(text: note.noteDescription!);
+    noteState = NoteStateOption();
+    noteState.setState(note.noteState!);
+    init();
+  }
 
-  TextEditingController noteTitleController = TextEditingController();
-  TextEditingController noteDescriptionController = TextEditingController();
+  init() {
+    //do something
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var noteState = NoteStateOption();
-    noteState.setState(note.noteState!);
-    noteTitleController.text = note.noteTitle!;
-    noteDescriptionController.text = note.noteDescription!;
+    // var noteState = NoteStateOption();
+    // noteState.setState(note.noteState!);
+    // noteTitleController.text = note.noteTitle!;
+    // noteDescriptionController.text = note.noteDescription!;
 
     return SafeArea(
       child: Scaffold(

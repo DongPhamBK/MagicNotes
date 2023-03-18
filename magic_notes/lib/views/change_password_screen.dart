@@ -15,16 +15,15 @@ class ChangePasswordScreen extends ConsumerWidget {
     required this.userEmail,
     Key? key,
   }) : super(key: key);
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     //var dataResponse = ref.watch(userProvider).dataResponse;
     var isLoading = ref.watch(userProvider).isLoading;
 
-    TextEditingController passwordController = TextEditingController();
-    TextEditingController confirmPasswordController = TextEditingController();
-
-    print("ChangePasswordScreen build");
+    //print("ChangePasswordScreen build");
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.orange,
