@@ -16,8 +16,8 @@ class LoginScreen extends ConsumerWidget {
     Key? key,
   }) : super(key: key);
 
-  TextEditingController userEmailController = TextEditingController(text: "thanhdongcat@gmail.com");
-  TextEditingController passwordController = TextEditingController(text: '123456');
+  TextEditingController userEmailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
