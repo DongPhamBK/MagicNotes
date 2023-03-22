@@ -4,6 +4,7 @@ import 'package:magic_notes/views/add_note_screen.dart';
 import 'package:magic_notes/views/change_password_screen.dart';
 import 'package:magic_notes/views/change_user_info_screen.dart';
 import 'package:magic_notes/views/forgot_password_screen.dart';
+import 'package:magic_notes/views/search_screen.dart';
 import 'package:magic_notes/views/signup_screen.dart';
 import 'package:magic_notes/views/update_note_screen.dart';
 
@@ -75,7 +76,7 @@ final GoRouter router = GoRouter(
         builder: (context, state) {
           GLOBAL_CONTEXT = context;
           Note note = state.extra as Note;
-          return UpdateNoteStcreen(note: note);
+          return UpdateNoteScreen(note: note);
         }),
     GoRoute(
       path: '/forgetpass',
@@ -95,5 +96,11 @@ final GoRouter router = GoRouter(
         );
       },
     ),
+    GoRoute(path: '/search',
+    name: '/search',
+    builder: (context, state) {
+      GLOBAL_CONTEXT = context;
+      return SearchScreen();
+    },),
   ],
 );

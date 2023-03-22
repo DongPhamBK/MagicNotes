@@ -30,6 +30,11 @@ class NoteRepository {
     var response = await noteServices.deleteNote(userId: userId, noteId: noteId);
     return response;
   }
+
+  Future<DataResponse?> searchNotes(String userId, String search) async {
+    var response = await noteServices.searchNotes(userId, search);
+    return response;
+  }
 }
 
 final noteRepositoryPr = Provider<NoteRepository>(

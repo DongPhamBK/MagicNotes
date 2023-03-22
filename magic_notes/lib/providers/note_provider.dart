@@ -19,15 +19,15 @@ class NoteNotifier extends ChangeNotifier {
 
   NoteNotifier({required this.noteRepository});
 
-  /*Future<DataResponse?> getNotes(String userId) async {
+  Future<DataResponse?> searchNotes(String userId, String search) async {
     isLoading = true;
     notifyListeners();
-    dataResponse = await noteRepository.getNotes(userId);
+    dataResponse = await noteRepository.searchNotes(userId, search);
     noteResult = dataResponse?.message.toString();
     isLoading = false;
     notifyListeners();
     return dataResponse;
-  }*/
+  }
 
   Future<DataResponse?> addNote(String userId, Note note) async {
     isLoading = true;
@@ -68,10 +68,10 @@ final noteProvider = ChangeNotifierProvider((ref) {
 final noteListProvider = FutureProvider.family<DataResponse?, String>((ref, userId) {
   var data = ref.watch(noteRepositoryPr).getNotes(userId);
   //Cập nhật sau mỗi 5 giây
-  final timer = Timer(const Duration(seconds: 10), () {
+  final timer = Timer(const Duration(seconds: 5), () {
     ref.invalidateSelf();
   });
   ref.onDispose(timer.cancel);
-
+  //Tính năng còn nghiên cứu thêm!
   return data;
 });

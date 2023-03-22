@@ -12,13 +12,13 @@ import '../providers/note_provider.dart';
 import '../utils/constants.dart';
 import '../utils/style.dart';
 
-class UpdateNoteStcreen extends ConsumerWidget {
+class UpdateNoteScreen extends ConsumerWidget {
   late Note note;
   late TextEditingController noteTitleController;
   late TextEditingController noteDescriptionController;
   late NoteStateOption noteState;
 
-  UpdateNoteStcreen({
+  UpdateNoteScreen({
     required this.note,
     Key? key,
   }) : super(key: key) {
@@ -48,6 +48,7 @@ class UpdateNoteStcreen extends ConsumerWidget {
           title: Text("Cập nhật ghi chú"),
         ),
         body: Container(
+          height: MediaQuery.of(context).size.height - 10,
           padding: EdgeInsets.all(8.0),
           decoration: BoxDecoration(
             image: DecorationImage(
@@ -87,13 +88,13 @@ class UpdateNoteStcreen extends ConsumerWidget {
                     style: textHeadline1.copyWith(color: Colors.deepOrange),
                   ),
                   SizedBox(
-                    width: Platform.isAndroid || Platform.isIOS ? MediaQuery.of(context).size.width - 10 : 500,
-                    height: MediaQuery.of(context).size.height - 550,
+                    width: Platform.isWindows ? 500 : MediaQuery.of(context).size.width - 10,
+                    height: Platform.isWindows ? 300 : 250,
                     child: TextField(
                       //expands: true, //Mở rộng tối đa
                       textAlign: TextAlign.left,
                       keyboardType: TextInputType.multiline,
-                      maxLines: 50,
+                      maxLines: 100,
                       controller: noteDescriptionController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
@@ -131,6 +132,7 @@ class UpdateNoteStcreen extends ConsumerWidget {
                         ref.read(noteProvider).updateNote(USER_ID, updateNote).then((value) async {
                           if (value!.code == 200) {
                             await Future.delayed(Duration(milliseconds: 500));
+                            // ignore: use_build_context_synchronously
                             await showDialog(
                               context: context,
                               builder: (context) {
@@ -140,6 +142,7 @@ class UpdateNoteStcreen extends ConsumerWidget {
                             );
                           } else {
                             await Future.delayed(Duration(milliseconds: 500));
+                            // ignore: use_build_context_synchronously
                             await showDialog(
                               context: context,
                               builder: (context) {

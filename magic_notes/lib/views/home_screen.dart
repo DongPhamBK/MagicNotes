@@ -34,6 +34,15 @@ class HomeScreen extends ConsumerWidget {
             },
           ),
         ),
+        actions: <Widget>[
+          IconButton(
+            padding: EdgeInsets.only(right: 25),
+            icon: Icon(Icons.search),
+            onPressed: () {
+              context.pushNamed('/search');
+            },
+          ),
+        ],
         title: Text("MagicNotes"),
       ),
       body: Padding(
