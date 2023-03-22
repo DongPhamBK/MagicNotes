@@ -46,8 +46,9 @@ class DetailScreen extends ConsumerWidget {
                   context,
                   "XÓA GHI CHÚ",
                   "Bạn chắc chắn muốn xóa ghi chú này?",
-                  () {
-                    ref.read(noteProvider).deleteNote(USER_ID, note.noteId!);
+                  () async {
+                    await ref.read(noteProvider).deleteNote(USER_ID, note.noteId!);
+                    await ref.read(noteListProvider(USER_ID)); // cập nhật nhanh
                     context.goNamed('/home', params: {'userId': USER_ID});
                   },
                 ),

@@ -71,8 +71,8 @@ class AddNoteScreen extends ConsumerWidget {
                     style: textHeadline1.copyWith(color: Colors.deepOrange),
                   ),
                   SizedBox(
-                    width: 500,
-                    height: Platform.isWindows? 300: 250,
+                    width: Platform.isWindows ? 500 : MediaQuery.of(context).size.width - 10,
+                    height: Platform.isWindows ? 300 : 250,
                     child: TextField(
                       //expands: true, //Mở rộng tối đa
                       textAlign: TextAlign.left,

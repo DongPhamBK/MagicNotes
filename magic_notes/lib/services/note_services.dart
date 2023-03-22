@@ -1,12 +1,9 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:magic_notes/models/data_response.dart';
 import 'package:magic_notes/utils/constants.dart';
 
 import '../models/note.dart';
-import '../models/user.dart';
 
 class NoteServices {
   final BASE_URL = Constants.BASE_URL;
@@ -64,6 +61,23 @@ class NoteServices {
       return DataResponse.fromJson(response.data);
     } catch (e) {
       // print(e);
+      throw Exception(e);
+    }
+  }
+
+  //Thao tác tìm kiếm
+  Future<DataResponse?> searchNotes(String userId, String search) async {
+    DataResponse? dataResponse;
+    try {
+      // print("Dữ liệu vào: $userId");
+      Response response = await dio.get("$BASE_URL/search?userid=$userId&&search=$search");
+      //print(response.data);
+
+      dataResponse = DataResponse.fromJson(response.data);
+      return dataResponse;
+    } catch (e) {
+      // print(e);
+      // print(Exception(e));
       throw Exception(e);
     }
   }
