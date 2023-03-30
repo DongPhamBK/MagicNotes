@@ -5,6 +5,9 @@ import 'package:magic_notes/providers/user_provider.dart';
 import 'package:magic_notes/utils/constants.dart';
 import 'package:magic_notes/utils/style.dart';
 import 'package:magic_notes/views/widgets/button.dart';
+import 'package:magic_notes/views/widgets/dialog_user_photo.dart';
+
+import '../../providers/password_provider.dart';
 
 class UserInfo extends ConsumerWidget {
   late String userId;
@@ -17,8 +20,9 @@ class UserInfo extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var userInfo = ref.watch(userProvider).userInfo;
+    var userPhotoURL = ref.watch(userProvider).userPhotoURL;
     print("UserInfo build");
-
+    //print("Local $imageLocalURL");
     return SafeArea(
       child: Container(
         color: Colors.yellow.shade200,
@@ -37,10 +41,34 @@ class UserInfo extends ConsumerWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                Icon(
-                  Icons.account_circle,
-                  color: Colors.white,
-                  size: 200,
+                SizedBox(
+                  height: 10,
+                ),
+                InkWell(
+                  child: imageLocal == null
+                      ? CircleAvatar(
+                          backgroundImage: NetworkImage(userPhotoURL),
+                          backgroundColor: Colors.orange,
+                          maxRadius: 100,
+                          minRadius: 20,
+                        )
+                      : CircleAvatar(
+                          backgroundImage: MemoryImage(imageLocal!),
+                          backgroundColor: Colors.orange,
+                          maxRadius: 100,
+                          minRadius: 20,
+                        ),
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return DialogUserPhoto(photoURL: userPhotoURL);
+                      },
+                    );
+                  },
+                ),
+                SizedBox(
+                  height: 20,
                 ),
                 Text("Tên tài khoản: ${userInfo != null ? userInfo!.userName : ""}"),
                 Text("Địa chỉ email: ${userInfo != null ? userInfo!.userEmail : ""}"),
@@ -63,7 +91,8 @@ class UserInfo extends ConsumerWidget {
               left: 0,
               child: Center(
                 child: buttonText("  Đăng xuất  ", () {
-                  USER_ID = "";
+                  imageLocal = null; // Cân chỉnh lại!
+                  ref.read(passwordPr.notifier).savePassword(false, "", "");
                   context.go('/login');
                 }),
               ),

@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:magic_notes/models/user.dart';
+import 'package:magic_notes/providers/password_provider.dart';
 import 'package:magic_notes/providers/user_provider.dart';
 import 'package:magic_notes/views/widgets/button.dart';
 import 'package:magic_notes/views/widgets/dialog_notification.dart';
 import 'package:magic_notes/views/widgets/password_input.dart';
+
 import '../utils/constants.dart';
 import '../utils/style.dart';
 
@@ -16,15 +18,15 @@ class LoginScreen extends ConsumerWidget {
     Key? key,
   }) : super(key: key);
 
-  TextEditingController userEmailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController userEmailController = TextEditingController(text: prefs!.getString('email'));
+  TextEditingController passwordController = TextEditingController(text: prefs!.getString('password'));
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var dataResponse = ref.watch(userProvider).dataResponse;
     var logInResult = ref.watch(userProvider).logInResult;
     var isLoading = ref.watch(userProvider).isLoading;
-
+    var isSavePassword = ref.watch(passwordPr);
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -78,6 +80,21 @@ class LoginScreen extends ConsumerWidget {
                         ),
                       ),
                       SizedBox(
+                        width: 250,
+                        child: CheckboxListTile(
+                          value: isSavePassword,
+                          checkColor: Colors.white,
+                          activeColor: Colors.orange,
+
+                          controlAffinity: ListTileControlAffinity.leading,
+                          // đặt bên trái
+                          onChanged: (value) {
+                            ref.read(passwordPr.notifier).savePassword(value!, userEmailController.text, passwordController.text);
+                          },
+                          title: Text('Nhớ mật khẩu'),
+                        ),
+                      ),
+                      SizedBox(
                         height: 20,
                       ),
                       buttonText(
@@ -103,9 +120,12 @@ class LoginScreen extends ConsumerWidget {
                           }
                         },
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
                       if (isLoading) CircularProgressIndicator(color: Colors.orange) else SizedBox(),
                       SizedBox(
-                        height: 50,
+                        height: 40,
                       ),
                       SizedBox(
                         width: 500,

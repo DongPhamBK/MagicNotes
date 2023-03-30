@@ -102,7 +102,7 @@ class UserServices {
         "userConfirmPassword": confirmPassword,
       };
       Response response = await dio.put("$BASE_URL/changepassword", data: data);
-      print(response.data);
+      // print(response.data);
       dataResponse = DataResponse.fromJson(response.data);
       return dataResponse;
     } on DioError catch (e) {
@@ -123,12 +123,51 @@ class UserServices {
       //print("Dữ liệu vào: $data");
       final data = {"userEmail": userEmail};
       Response response = await dio.post("$BASE_URL/changepassword", data: data);
-      print(response.data);
+      // print(response.data);
       dataResponse = DataResponse.fromJson(response.data);
       return dataResponse;
     } on DioError catch (e) {
       // Xử lí time out
 
+      return DataResponse(status: "time out", code: 400, data: "null", message: e.toString());
+      //throw Exception(ex.message);
+    } catch (e) {
+      //print(e);
+      //print(Exception(e));
+      throw Exception(e);
+    }
+  }
+
+  //Thao tác lấy ảnh đại diện
+  Future<DataResponse?> getUserPhoto(String userId) async {
+    DataResponse? dataResponse;
+    try {
+      Response response = await dio.get("$BASE_URL/photo?userid=$userId");
+      // print(response.data);
+      dataResponse = DataResponse.fromJson(response.data);
+      return dataResponse;
+    } on DioError catch (e) {
+      // Xử lí time out
+      return DataResponse(status: "time out", code: 400, data: "null", message: e.toString());
+      //throw Exception(ex.message);
+    } catch (e) {
+      //print(e);
+      //print(Exception(e));
+      throw Exception(e);
+    }
+  }
+
+  //Thao tác đổi ảnh đại diện
+  Future<DataResponse?> changeUserPhoto(String userId, String base64) async {
+    DataResponse? dataResponse;
+    try {
+      final data = {"photo": base64};
+      Response response = await dio.post("$BASE_URL/photo?userid=$userId", data: data);
+      // print(response.data);
+      dataResponse = DataResponse.fromJson(response.data);
+      return dataResponse;
+    } on DioError catch (e) {
+      // Xử lí time out
       return DataResponse(status: "time out", code: 400, data: "null", message: e.toString());
       //throw Exception(ex.message);
     } catch (e) {

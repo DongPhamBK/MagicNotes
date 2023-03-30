@@ -68,7 +68,7 @@ final noteProvider = ChangeNotifierProvider((ref) {
 final noteListProvider = FutureProvider.family<DataResponse?, String>((ref, userId) {
   var data = ref.watch(noteRepositoryPr).getNotes(userId);
   //Cập nhật sau mỗi 5 giây
-  final timer = Timer(const Duration(seconds: 5), () {
+  final timer = Timer(const Duration(seconds: 10), () {
     ref.invalidateSelf();
   });
   ref.onDispose(timer.cancel);

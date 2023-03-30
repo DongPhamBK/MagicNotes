@@ -5,10 +5,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:magic_notes/utils/constants.dart';
 import 'package:magic_notes/utils/style.dart';
 import 'package:magic_notes/views/navigation/nav_graph.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:window_manager/window_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  prefs = await SharedPreferences.getInstance();
   //Tương tác chỉ dùng cho Windows
   if (Platform.isWindows) {
     await windowManager.ensureInitialized();
@@ -90,11 +92,11 @@ class _MyAppWindowsState extends State<MyAppWindows> with WindowListener {
               borderRadius: BorderRadius.circular(10.0),
             ),
             backgroundColor: Colors.orangeAccent.shade200,
-            content: Text('Bạn muốn thoát ứng dụng, bạn sẽ phải đăng nhập lại!'),
+            content: Text('Bạn muốn thoát ứng dụng?'),
             actions: [
               TextButton(
                 child: Text(
-                  "Trở lại ứng dụng",
+                  "Không",
                   style: textHeadline1,
                 ),
                 onPressed: () {
@@ -103,7 +105,7 @@ class _MyAppWindowsState extends State<MyAppWindows> with WindowListener {
               ),
               TextButton(
                 child: Text(
-                  "Đã hiểu",
+                  "Đúng",
                   style: textHeadline1,
                 ),
                 onPressed: () async {

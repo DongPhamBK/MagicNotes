@@ -5,13 +5,16 @@ import 'package:magic_notes/models/user.dart';
 import 'package:magic_notes/repository/user_repository.dart';
 
 class UserNotifier extends ChangeNotifier {
-  late UserRepository userRepository;
-  bool isLoading = false;
-  DataResponse? dataResponse;
-  String? logInResult = "";
-  String? signUpResult = "";
-  String? changePasswordResult = "";
-  User? userInfo;
+  late UserRepository userRepository; //Kho
+  bool isLoading = false; //Trạng thái đang tải
+  DataResponse? dataResponse; //Giá trị phản hồi từ server
+  String? logInResult = ""; //Kết quả đăng nhập
+  String? signUpResult = ""; //Kết quả đăng ký
+  String? changePasswordResult = ""; //Kết quả thay đổi mật khẩu
+  User? userInfo; //Thông tin cá nhân
+  //Ảnh cá nhân mặc định
+  String userPhotoURL =
+      "https://firebasestorage.googleapis.com/v0/b/magicnotes2023.appspot.com/o/default.png?alt=media&token=64e3cfdc-afcf-4660-8294-f46d95db9833";
 
   UserNotifier({required this.userRepository});
 
@@ -77,6 +80,18 @@ class UserNotifier extends ChangeNotifier {
     notifyListeners();
     //print(dataResponse);
     return dataResponse;
+  }
+
+  //Lấy ảnh đại diện
+  getUserPhoto(String userId) async {
+    dataResponse = await userRepository.getUserPhoto(userId);
+    userPhotoURL = dataResponse!.data;
+    notifyListeners();
+  }
+
+  //Đổi ảnh đại diện
+  changeUserPhoto(String userId, String base64) async {
+    dataResponse = await userRepository.changeUserPhoto(userId, base64);
   }
 }
 

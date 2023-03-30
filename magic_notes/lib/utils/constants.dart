@@ -1,5 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Constants {
   static const BASE_URL = "https://dongpt.pythonanywhere.com/v1";
@@ -37,3 +40,9 @@ extension convert on String {
     }
   }
 }
+
+//Mã lưu mật khẩu
+SharedPreferences? prefs = null;
+
+//Lưu ảnh hiện tại
+Uint8List? imageLocal = null;

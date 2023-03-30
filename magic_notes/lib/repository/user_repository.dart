@@ -40,6 +40,16 @@ class UserRepository {
     var response = await userServices.forgotUserPassword(userEmail);
     return response;
   }
+
+  Future<DataResponse?> getUserPhoto(String userId) async{
+    var response = await userServices.getUserPhoto(userId);
+    return response;
+  }
+
+  Future<DataResponse?> changeUserPhoto(String userId, String base64) async{
+    var response = await userServices.changeUserPhoto(userId, base64);
+    return response;
+  }
 }
 
 final userRepositoryPr = Provider<UserRepository>(

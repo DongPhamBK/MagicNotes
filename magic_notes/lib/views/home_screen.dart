@@ -30,6 +30,7 @@ class HomeScreen extends ConsumerWidget {
             onPressed: () {
               //Lấy thông tin người dùng trước tiên
               ref.read(userProvider).getUserInfo(userId!);
+              ref.read(userProvider).getUserPhoto(userId!);
               Scaffold.of(context).openDrawer();
             },
           ),
@@ -65,14 +66,23 @@ class HomeScreen extends ConsumerWidget {
                 ),
               );
             } else {
-              return SingleChildScrollView(
-                child: Center(
-                  child: Wrap(
-                    spacing: 8.0, // gap between adjacent chips
-                    runSpacing: 4.0, // gap between lines
-                    children: List.generate(listNote.length, (index) {
-                      return NoteItem(note: listNote[index]);
-                    }),
+              //Khá ảo
+              return Theme(
+                data: Theme.of(context).copyWith(
+                  scrollbarTheme: ScrollbarThemeData(
+                    //thumbColor: MaterialStateProperty.all(Colors.red), //Màu thanh cuộn
+                    thickness: MaterialStateProperty.all(30),
+                  ),
+                ),
+                child: SingleChildScrollView(
+                  child: Center(
+                    child: Wrap(
+                      spacing: 8.0, // gap between adjacent chips
+                      runSpacing: 4.0, // gap between lines
+                      children: List.generate(listNote.length, (index) {
+                        return NoteItem(note: listNote[index]);
+                      }),
+                    ),
                   ),
                 ),
               );
