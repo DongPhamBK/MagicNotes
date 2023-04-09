@@ -13,7 +13,7 @@ Widget dialogNotification(BuildContext context, String title, String message) {
     actions: [
       TextButton(
         onPressed: () {
-          context.pop();
+          context.pop("Giá trị trả về");
         },
         child:  Text(
           "Đã hiểu",

@@ -116,14 +116,14 @@ class ChangeUserInfoScreen extends ConsumerWidget {
                           } else {
                             ref.read(userProvider).changeUserInfo(USER_ID, userName, userDescription).then((value) async {
                               if (value!.code == 200) {
-                                await Future.delayed(Duration(milliseconds: 500)).then((value) => showDialog(
+                                await Future.delayed(Duration(milliseconds: 100)).then((value) => showDialog(
                                       context: context,
                                       builder: (context) {
                                         return dialogNotification(context, "KẾT QUẢ", "Đổi thông tin người dùng thành công!");
                                       },
                                     ));
                               } else {
-                                await Future.delayed(Duration(milliseconds: 500)).then((value) => showDialog(
+                                await Future.delayed(Duration(milliseconds: 100)).then((value) => showDialog(
                                       context: context,
                                       builder: (context) {
                                         return dialogNotification(context, "KẾT QUẢ", "Đổi thông tin người dùng thất bại!");

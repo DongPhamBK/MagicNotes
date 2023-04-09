@@ -39,8 +39,9 @@ class HomeScreen extends ConsumerWidget {
           IconButton(
             padding: EdgeInsets.only(right: 25),
             icon: Icon(Icons.search),
-            onPressed: () {
-              context.pushNamed('/search');
+            onPressed: () async {
+              final String? result = await context.pushNamed<String>('/search');
+              print("Giá trị sau push $result");
             },
           ),
         ],

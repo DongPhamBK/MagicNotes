@@ -96,11 +96,13 @@ final GoRouter router = GoRouter(
         );
       },
     ),
-    GoRoute(path: '/search',
-    name: '/search',
-    builder: (context, state) {
-      GLOBAL_CONTEXT = context;
-      return SearchScreen();
-    },),
+    GoRoute(
+      path: '/search',
+      name: '/search',
+      builder: (context, state) {
+        GLOBAL_CONTEXT = context;
+        return SearchScreen();
+      },
+    ),
   ],
 );

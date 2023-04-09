@@ -23,6 +23,7 @@ class SearchScreen extends ConsumerWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          //toolbarHeight: 56,//Độ cao toolbar
           backgroundColor: Colors.orange,
           title: TextField(
             maxLines: 1,
@@ -32,7 +33,10 @@ class SearchScreen extends ConsumerWidget {
             autofocus: true,
             showCursor: true,
             decoration: InputDecoration(
-              border: OutlineInputBorder(
+              contentPadding: EdgeInsets.all(2.5), //Phân cách đệm
+              enabledBorder: OutlineInputBorder(
+                //dùng enable thay vì border
+                borderSide: BorderSide(color: Colors.white), //màu viền
                 borderRadius: BorderRadius.all(
                   Radius.circular(8),
                 ),

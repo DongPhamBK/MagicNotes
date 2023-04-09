@@ -114,15 +114,16 @@ class AddNoteScreen extends ConsumerWidget {
                         print(USER_ID);
                         ref.read(noteProvider).addNote(USER_ID, newNote).then((value) async {
                           if (value!.code == 200) {
-                            await Future.delayed(Duration(milliseconds: 500));
-                            await showDialog(
+                            await Future.delayed(Duration(milliseconds: 100));
+                            var res = await showDialog<String>(
                               context: context,
                               builder: (context) {
                                 return dialogNotification(context, "KẾT QUẢ", "Thêm ghi chú thành công!");
                               },
                             );
+                            print("Giá trị trả về từ dialog: $res");
                           } else {
-                            await Future.delayed(Duration(milliseconds: 500));
+                            await Future.delayed(Duration(milliseconds: 100));
                             await showDialog(
                               context: context,
                               builder: (context) {
@@ -130,7 +131,7 @@ class AddNoteScreen extends ConsumerWidget {
                               },
                             );
                           }
-                        }).then((value) => context.pop());
+                        }).then((value) => context.pop("Du lieu tra ve"));
                         //then then mới đúng!
                         //Cũng được
                       }

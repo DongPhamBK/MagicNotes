@@ -131,7 +131,7 @@ class UpdateNoteScreen extends ConsumerWidget {
                         print(USER_ID);
                         ref.read(noteProvider).updateNote(USER_ID, updateNote).then((value) async {
                           if (value!.code == 200) {
-                            await Future.delayed(Duration(milliseconds: 500));
+                            await Future.delayed(Duration(milliseconds: 100));
                             // ignore: use_build_context_synchronously
                             await showDialog(
                               context: context,
@@ -141,7 +141,7 @@ class UpdateNoteScreen extends ConsumerWidget {
                               },
                             );
                           } else {
-                            await Future.delayed(Duration(milliseconds: 500));
+                            await Future.delayed(Duration(milliseconds: 100));
                             // ignore: use_build_context_synchronously
                             await showDialog(
                               context: context,
