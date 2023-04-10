@@ -1,7 +1,0 @@
-firebase_admin
-firebase
-flask
-flask restful
-uuid
-pyrebase
-dataclasses-json
