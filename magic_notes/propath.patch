@@ -1,0 +1,1151 @@
+Index: magic_notes/lib/views/update_note_screen.dart
+===================================================================
+diff --git a/magic_notes/lib/views/update_note_screen.dart b/magic_notes/lib/views/update_note_screen.dart
+deleted file mode 100644
+--- a/magic_notes/lib/views/update_note_screen.dart	(revision 56aa2e800348d6a1fa5c09f03de6094a8d9a8b23)
++++ /dev/null	(revision 56aa2e800348d6a1fa5c09f03de6094a8d9a8b23)
+@@ -1,150 +0,0 @@
+-import 'dart:io';
+-
+-import 'package:flutter/material.dart';
+-import 'package:flutter_riverpod/flutter_riverpod.dart';
+-import 'package:go_router/go_router.dart';
+-import 'package:magic_notes/views/widgets/button.dart';
+-import 'package:magic_notes/views/widgets/dialog_notification.dart';
+-import 'package:magic_notes/views/widgets/note_state_option.dart';
+-
+-import '../models/note.dart';
+-import '../providers/note_provider.dart';
+-import '../utils/constants.dart';
+-import '../utils/style.dart';
+-
+-class UpdateNoteStcreen extends ConsumerWidget {
+-  late Note note;
+-
+-  UpdateNoteStcreen({
+-    required this.note,
+-    Key? key,
+-  }) : super(key: key);
+-
+-  @override
+-  Widget build(BuildContext context, WidgetRef ref) {
+-    var noteState = NoteStateOption();
+-    noteState.setState(note.noteState!);
+-    TextEditingController noteTitleController = TextEditingController();
+-    noteTitleController.text = note.noteTitle!;
+-    TextEditingController noteDescriptionController = TextEditingController();
+-    noteDescriptionController.text = note.noteDescription!;
+-
+-    return Scaffold(
+-      appBar: AppBar(
+-        backgroundColor: Colors.orange,
+-        title: const Text("Cập nhật ghi chú"),
+-      ),
+-      body: Container(
+-        padding: EdgeInsets.all(8.0),
+-        decoration: const BoxDecoration(
+-          image: DecorationImage(
+-            image: AssetImage('assets/background.png'),
+-            fit: BoxFit.cover,
+-          ),
+-        ),
+-        child: SingleChildScrollView(
+-          child: Center(
+-            child: Column(
+-              mainAxisAlignment: MainAxisAlignment.center,
+-              children: [
+-                const SizedBox(
+-                  height: 20,
+-                ),
+-                Text(
+-                  "Cập nhật tiêu đề",
+-                  style: textHeadline1.copyWith(color: Colors.deepOrange),
+-                ),
+-                SizedBox(
+-                  width: 500,
+-                  child: TextField(
+-                    maxLength: 100,
+-                    keyboardType: TextInputType.text,
+-                    controller: noteTitleController,
+-                    decoration: const InputDecoration(
+-                      border: OutlineInputBorder(),
+-                      hintText: 'Nhập tiêu đề ghi chú của bạn!',
+-                    ),
+-                  ),
+-                ),
+-                const SizedBox(
+-                  height: 10,
+-                ),
+-                Text(
+-                  "Cập nhật nội dung",
+-                  style: textHeadline1.copyWith(color: Colors.deepOrange),
+-                ),
+-                SizedBox(
+-                  width: Platform.isAndroid || Platform.isIOS ? MediaQuery.of(context).size.width - 10 : 500,
+-                  height: MediaQuery.of(context).size.height - 410,
+-                  child: TextField(
+-                    //expands: true, //Mở rộng tối đa
+-                    textAlign: TextAlign.left,
+-                    keyboardType: TextInputType.multiline,
+-                    maxLines: 100,
+-                    controller: noteDescriptionController,
+-                    decoration: const InputDecoration(
+-                      border: OutlineInputBorder(),
+-                      hintText: 'Nhập nội dung ghi chú của bạn!',
+-                    ),
+-                  ),
+-                ),
+-                Text(
+-                  "Cập nhật trạng thái hiện tại",
+-                  style: textHeadline1.copyWith(color: Colors.deepOrange),
+-                ),
+-                noteState,
+-                const SizedBox(
+-                  height: 20,
+-                ),
+-                buttonText(
+-                  "Cập nhật",
+-                  () async {
+-                    final noteTitle = noteTitleController.text;
+-                    final noteDescription = noteDescriptionController.text;
+-                    final updateNote = Note(
+-                      noteId: note.noteId,
+-                      noteTitle: noteTitle,
+-                      noteDescription: noteDescription,
+-                      noteCreatedTime: null,
+-                      noteState: noteState.getState(),
+-                    );
+-                    if (noteTitle.isEmpty || noteDescription.isEmpty) {
+-                      await showDialog(
+-                        context: context,
+-                        builder: (context) => dialogNotification(context, "CHÚ Ý:", "Không được để trống bất cứ ô nào!"),
+-                      );
+-                    } else {
+-                      print(USER_ID);
+-                      ref.read(noteProvider).updateNote(USER_ID, updateNote).then((value) async {
+-                        if (value!.code == 200) {
+-                          await Future.delayed(Duration(milliseconds: 100));
+-                          await showDialog(
+-                            context: context,
+-                            builder: (context) {
+-                              Future.delayed(Duration(seconds: 2));
+-                              return dialogNotification(context, "KẾT QUẢ", "Cập nhật ghi chú thành công!");
+-                            },
+-                          );
+-                        } else {
+-                          await Future.delayed(Duration(milliseconds: 100));
+-                          showDialog(
+-                            context: context,
+-                            builder: (context) {
+-                              return dialogNotification(context, "KẾT QUẢ", "Cập nhật ghi chú thất bại!");
+-                            },
+-                          );
+-                        }
+-                      }).then((value) => context.goNamed('/home', params: {'userId': USER_ID}));
+-                    }
+-                    //context.pop();
+-                    //var new_note = note.copyWith(noteTitle: noteTitle, noteDescription: noteDescription, noteState: noteState.getState(), noteCreatedTime: DateTime.now().toString());
+-                  },
+-                ),
+-              ],
+-            ),
+-          ),
+-        ),
+-      ),
+-    );
+-  }
+-}
+Index: magic_notes/lib/views/signup_screen.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/magic_notes/lib/views/signup_screen.dart b/magic_notes/lib/views/signup_screen.dart
+--- a/magic_notes/lib/views/signup_screen.dart	(revision 56aa2e800348d6a1fa5c09f03de6094a8d9a8b23)
++++ b/magic_notes/lib/views/signup_screen.dart	(date 1678891035456)
+@@ -30,7 +30,7 @@
+       body: Container(
+         decoration: const BoxDecoration(
+           image: DecorationImage(
+-            image: AssetImage("assets/background.png"),
++            image: AssetImage("assets/background_11.gif"),
+             fit: BoxFit.cover,
+           ),
+         ),
+@@ -46,14 +46,14 @@
+                       mainAxisAlignment: MainAxisAlignment.center,
+                       children: [
+                         SizedBox(
+-                          height: 20,
++                          height: 10,
+                         ),
+                         Text(
+                           "ĐĂNG KÝ",
+                           style: textHeadline1.copyWith(color: Colors.orange, fontSize: 32),
+                         ),
+                         const SizedBox(
+-                          height: 20,
++                          height: 10,
+                         ),
+                         SizedBox(
+                           width: 500,
+@@ -61,15 +61,23 @@
+                             maxLength: 20,
+                             keyboardType: TextInputType.text,
+                             controller: userNameController,
+-                            decoration: const InputDecoration(
+-                              border: OutlineInputBorder(),
++                            decoration: InputDecoration(
++                              labelStyle: const TextStyle(color: Colors.black54),
++                              focusedBorder: OutlineInputBorder(
++                                borderRadius: BorderRadius.circular(8),
++                                borderSide: const BorderSide(color: Colors.orange),
++                              ),
++                              border: OutlineInputBorder(
++                                borderRadius: BorderRadius.circular(8),
++                                borderSide: const BorderSide(color: Colors.orange),
++                              ),
+                               labelText: 'Tên tài khoản',
+                               hintText: 'Nhập tên tài khoản của bạn!',
+                             ),
+                           ),
+                         ),
+                         const SizedBox(
+-                          height: 20,
++                          height: 10,
+                         ),
+                         SizedBox(
+                           width: 500,
+@@ -77,15 +85,23 @@
+                             maxLength: 100,
+                             keyboardType: TextInputType.emailAddress,
+                             controller: userEmailController,
+-                            decoration: const InputDecoration(
+-                              border: OutlineInputBorder(),
++                            decoration:  InputDecoration(
++                              labelStyle: const TextStyle(color: Colors.black54),
++                              focusedBorder: OutlineInputBorder(
++                                borderRadius: BorderRadius.circular(8),
++                                borderSide: const BorderSide(color: Colors.orange),
++                              ),
++                              border: OutlineInputBorder(
++                                borderRadius: BorderRadius.circular(8),
++                                borderSide: const BorderSide(color: Colors.orange),
++                              ),
+                               labelText: 'Địa chỉ email',
+                               hintText: 'Nhập địa chỉ email của bạn!',
+                             ),
+                           ),
+                         ),
+                         const SizedBox(
+-                          height: 20,
++                          height: 10,
+                         ),
+                         SizedBox(
+                           width: 500,
+@@ -93,37 +109,45 @@
+                             maxLength: 200,
+                             keyboardType: TextInputType.text,
+                             controller: userDescriptionController,
+-                            decoration: const InputDecoration(
+-                              border: OutlineInputBorder(),
++                            decoration:  InputDecoration(
++                              labelStyle: const TextStyle(color: Colors.black54),
++                              focusedBorder: OutlineInputBorder(
++                                borderRadius: BorderRadius.circular(8),
++                                borderSide: const BorderSide(color: Colors.orange),
++                              ),
++                              border: OutlineInputBorder(
++                                borderRadius: BorderRadius.circular(8),
++                                borderSide: const BorderSide(color: Colors.orange),
++                              ),
+                               labelText: 'Mô tả',
+                               hintText: 'Nhập mô tả về bạn!',
+                             ),
+                           ),
+                         ),
+                         const SizedBox(
+-                          height: 20,
++                          height: 10,
+                         ),
+                         SizedBox(
+                           width: 500,
+                           child: PasswordInput(
+-                            label: "Mật khẩu",
++                            labelText: "Mật khẩu",
+                             hintText: "Nhập mật khẩu của bạn!",
+                             passwordController: passwordController,
+                           ),
+                         ),
+                         const SizedBox(
+-                          height: 20,
++                          height: 10,
+                         ),
+                         SizedBox(
+                           width: 500,
+                           child: PasswordInput(
+-                            label: "Xác nhận mật khẩu",
++                            labelText: "Xác nhận mật khẩu",
+                             hintText: "Nhập lại mật khẩu của bạn!",
+                             passwordController: confirmPasswordController,
+                           ),
+                         ),
+                         const SizedBox(
+-                          height: 20,
++                          height: 10,
+                         ),
+                         buttonText(
+                           "Xác nhận",
+@@ -152,7 +176,7 @@
+                         ),
+                         if (isLoading) const CircularProgressIndicator(color: Colors.orange) else const SizedBox(),
+                         const SizedBox(
+-                          height: 50,
++                          height: 20,
+                         ),
+                         SizedBox(
+                           width: 500,
+Index: magic_notes/lib/utils/constants.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/magic_notes/lib/utils/constants.dart b/magic_notes/lib/utils/constants.dart
+--- a/magic_notes/lib/utils/constants.dart	(revision 56aa2e800348d6a1fa5c09f03de6094a8d9a8b23)
++++ b/magic_notes/lib/utils/constants.dart	(date 1678984657105)
+@@ -2,7 +2,7 @@
+ import 'package:flutter/cupertino.dart';
+ 
+ class Constants {
+-  static const BASE_URL = "http://192.168.1.183:5000/v1";
++  static const BASE_URL = "https://dongpt.pythonanywhere.com/v1";
+ }
+ 
+ final options = BaseOptions(
+Index: MagicNotesServer/.idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/MagicNotesServer/.idea/vcs.xml b/MagicNotesServer/.idea/vcs.xml
+new file mode 100644
+--- /dev/null	(date 1678883425344)
++++ b/MagicNotesServer/.idea/vcs.xml	(date 1678883425344)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: magic_notes/pubspec.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/magic_notes/pubspec.yaml b/magic_notes/pubspec.yaml
+--- a/magic_notes/pubspec.yaml	(revision 56aa2e800348d6a1fa5c09f03de6094a8d9a8b23)
++++ b/magic_notes/pubspec.yaml	(date 1678888244833)
+@@ -71,6 +71,18 @@
+   assets:
+      - assets/app_icon.png
+      - assets/background.png
++     - assets/background_1.gif
++     - assets/background_2.gif
++     - assets/background_3.gif
++     - assets/background_4.gif
++     - assets/background_5.gif
++     - assets/background_6.gif
++     - assets/background_7.gif
++     - assets/background_8.gif
++     - assets/background_9.gif
++     - assets/background_10.gif
++     - assets/background_11.gif
++     - assets/background_12.gif
+ 
+   # An image asset can refer to one or more resolution-specific "variants", see
+   # https://flutter.dev/assets-and-images/#resolution-aware
+Index: magic_notes/lib/main.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/magic_notes/lib/main.dart b/magic_notes/lib/main.dart
+--- a/magic_notes/lib/main.dart	(revision 56aa2e800348d6a1fa5c09f03de6094a8d9a8b23)
++++ b/magic_notes/lib/main.dart	(date 1678889349599)
+@@ -12,8 +12,8 @@
+   //Tương tác chỉ dùng cho Windows
+   if (Platform.isWindows) {
+     await windowManager.ensureInitialized();
+-    WindowManager.instance.setMinimumSize(const Size(600, 760));
+-    WindowOptions windowOptions = const WindowOptions(size: Size(600, 760), title: "Magic Notes", titleBarStyle: TitleBarStyle.normal);
++    WindowManager.instance.setMinimumSize(const Size(800, 670));
++    WindowOptions windowOptions = const WindowOptions(size: Size(800, 670), title: "Magic Notes", titleBarStyle: TitleBarStyle.normal);
+     windowManager.waitUntilReadyToShow(windowOptions, () async {
+       await windowManager.show();
+       await windowManager.focus();
+Index: MagicNotesServer/.idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/MagicNotesServer/.idea/misc.xml b/MagicNotesServer/.idea/misc.xml
+--- a/MagicNotesServer/.idea/misc.xml	(revision 56aa2e800348d6a1fa5c09f03de6094a8d9a8b23)
++++ b/MagicNotesServer/.idea/misc.xml	(date 1678942167368)
+@@ -4,4 +4,7 @@
+   <component name="PyCharmProfessionalAdvertiser">
+     <option name="shown" value="true" />
+   </component>
++  <component name="PyPackaging">
++    <option name="earlyReleasesAsUpgrades" value="true" />
++  </component>
+ </project>
+\ No newline at end of file
+Index: magic_notes/lib/views/login_screen.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/magic_notes/lib/views/login_screen.dart b/magic_notes/lib/views/login_screen.dart
+--- a/magic_notes/lib/views/login_screen.dart	(revision 56aa2e800348d6a1fa5c09f03de6094a8d9a8b23)
++++ b/magic_notes/lib/views/login_screen.dart	(date 1678980709157)
+@@ -26,7 +26,8 @@
+     return Scaffold(
+       body: Container(
+         decoration: const BoxDecoration(
+-          image: DecorationImage(image: AssetImage("assets/background.png"), fit: BoxFit.cover),
++          //image: DecorationImage(image: NetworkImage("https://firebasestorage.googleapis.com/v0/b/magicnotes2023.appspot.com/o/background_11.gif?alt=media&token=3d51b650-e7e3-4bc0-8d8e-4c5ca318a72f"), fit: BoxFit.cover),
++          image: DecorationImage(image: AssetImage("assets/background_3.gif"), fit: BoxFit.cover),
+         ),
+         child: Padding(
+           padding: const EdgeInsets.all(8.0),
+@@ -40,7 +41,7 @@
+                       "MAGICNOTES",
+                       style: textHeadline1.copyWith(color: Colors.deepOrange, fontSize: 52),
+                     ),
+-                    SizedBox(
++                    const SizedBox(
+                       height: 20,
+                     ),
+                     Text(
+@@ -56,8 +57,16 @@
+                         maxLength: 100,
+                         keyboardType: TextInputType.emailAddress,
+                         controller: userEmailController,
+-                        decoration: const InputDecoration(
+-                          border: OutlineInputBorder(),
++                        decoration: InputDecoration(
++                          labelStyle: const TextStyle(color: Colors.black54),
++                          focusedBorder: OutlineInputBorder(
++                            borderRadius: BorderRadius.circular(8),
++                            borderSide: const BorderSide(color: Colors.orange),
++                          ),
++                          border: OutlineInputBorder(
++                            borderRadius: BorderRadius.circular(8),
++                            borderSide: const BorderSide(color: Colors.orange),
++                          ),
+                           labelText: 'Địa chỉ email',
+                           hintText: 'Nhập địa chỉ email của bạn!',
+                         ),
+@@ -69,7 +78,7 @@
+                     SizedBox(
+                       width: 500,
+                       child: PasswordInput(
+-                        label: "Mật khẩu",
++                        labelText: "Mật khẩu",
+                         hintText: "Nhập mật khẩu của bạn!",
+                         passwordController: passwordController,
+                       ),
+Index: magic_notes/lib/views/forgot_password_screen.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/magic_notes/lib/views/forgot_password_screen.dart b/magic_notes/lib/views/forgot_password_screen.dart
+--- a/magic_notes/lib/views/forgot_password_screen.dart	(revision 56aa2e800348d6a1fa5c09f03de6094a8d9a8b23)
++++ b/magic_notes/lib/views/forgot_password_screen.dart	(date 1678891596766)
+@@ -27,7 +27,7 @@
+         body: Container(
+           decoration: const BoxDecoration(
+             image: DecorationImage(
+-              image: AssetImage('assets/background.png'),
++              image: AssetImage('assets/background_10.gif'),
+               fit: BoxFit.cover,
+             ),
+           ),
+@@ -46,7 +46,7 @@
+                       width: 500,
+                       child: Text(
+                         "Sau khi nhập tài khoản email bạn đã đăng ký và nhấn Xác nhận, một email sẽ được gửi tới tài khoản của bạn, mở email và truy cập liên kết rồi đổi mật khẩu. Sau đó, quay lại và đăng nhập với mật khẩu mới!",
+-                        style: textContent.copyWith(color: Colors.black),
++                        style: textContent.copyWith(color: Colors.white),
+                       ),
+                     ),
+                     const SizedBox(
+@@ -58,11 +58,20 @@
+                         maxLength: 100,
+                         keyboardType: TextInputType.text,
+                         controller: userEmailController,
+-                        decoration: const InputDecoration(
+-                          border: OutlineInputBorder(),
++                        decoration: InputDecoration(
++                          filled: true,
++                          fillColor: Colors.white.withOpacity(0.8),
++                          labelStyle: const TextStyle(color: Colors.white70, fontSize: 25),
++                          focusedBorder: OutlineInputBorder(
++                            borderRadius: BorderRadius.circular(8),
++                            borderSide: const BorderSide(color: Colors.orange),
++                          ),
++                          border: OutlineInputBorder(
++                            borderRadius: BorderRadius.circular(8),
++                            borderSide: const BorderSide(color: Colors.orange),
++                          ),
+                           labelText: 'Địa chỉ email',
+                           hintText: 'Nhập địa chỉ email ứng với tài khoản của bạn!',
+-                          labelStyle: TextStyle(fontSize: 25),
+                         ),
+                       ),
+                     ),
+Index: magic_notes/lib/views/widgets/user_info.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/magic_notes/lib/views/widgets/user_info.dart b/magic_notes/lib/views/widgets/user_info.dart
+--- a/magic_notes/lib/views/widgets/user_info.dart	(revision 56aa2e800348d6a1fa5c09f03de6094a8d9a8b23)
++++ b/magic_notes/lib/views/widgets/user_info.dart	(date 1678891907018)
+@@ -20,7 +20,13 @@
+     print("UserInfo build");
+ 
+     return Container(
+-      color: Colors.yellow.shade200,
++      //color: Colors.yellow.shade200,
++      decoration: const BoxDecoration(
++        image: DecorationImage(
++          image: AssetImage('assets/background_7.gif'),
++          fit: BoxFit.cover,
++        ),
++      ),
+       padding: const EdgeInsets.only(left: 6, right: 2),
+       child: Stack(
+         children: [
+@@ -28,11 +34,10 @@
+             crossAxisAlignment: CrossAxisAlignment.stretch,
+             children: [
+               Container(
+-                color: Colors.orange,
+                 height: 50,
+                 child: Text(
+                   "Xin chào ${userInfo?.userName}",
+-                  style: textHeadline1.copyWith(backgroundColor: Colors.orange),
++                  style: textHeadline1,
+                   overflow: TextOverflow.ellipsis,
+                 ),
+               ),
+@@ -41,19 +46,35 @@
+                 color: Colors.white,
+                 size: 200,
+               ),
+-              Text("Tên tài khoản: ${userInfo?.userName}"),
+-              Text("Địa chỉ email: ${userInfo?.userEmail}"),
+-              Text("Mô tả: ${userInfo?.userDescription}"),
++              Text(
++                "Tên tài khoản: ${userInfo?.userName}",
++                style: TextStyle(color: Colors.white),
++              ),
++              Text(
++                "Địa chỉ email: ${userInfo?.userEmail}",
++                style: TextStyle(color: Colors.white),
++              ),
++              Text(
++                "Mô tả: ${userInfo?.userDescription}",
++                style: TextStyle(color: Colors.white),
++              ),
+               TextButton(
+-                  onPressed: () {
+-                    context.push('/changepass', extra: userInfo?.userEmail);
+-                  },
+-                  child: const Text("Đổi mật khẩu")),
++                onPressed: () {
++                  context.push('/changepass', extra: userInfo?.userEmail);
++                },
++                child: Text(
++                  "Đổi mật khẩu",
++                  style: TextStyle(color: Colors.white),
++                ),
++              ),
+               TextButton(
+                   onPressed: () {
+                     context.pushNamed('/changeuserinfo', params: {'userName': userInfo!.userName!, 'userDescription': userInfo!.userDescription!});
+                   },
+-                  child: const Text("Thay đổi thông tin người dùng")),
++                  child: const Text(
++                    "Thay đổi thông tin người dùng",
++                    style: TextStyle(color: Colors.white),
++                  )),
+             ],
+           ),
+           Positioned(
+Index: magic_notes/lib/views/widgets/note_state_option.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/magic_notes/lib/views/widgets/note_state_option.dart b/magic_notes/lib/views/widgets/note_state_option.dart
+--- a/magic_notes/lib/views/widgets/note_state_option.dart	(revision 56aa2e800348d6a1fa5c09f03de6094a8d9a8b23)
++++ b/magic_notes/lib/views/widgets/note_state_option.dart	(date 1678892094394)
+@@ -37,11 +37,15 @@
+           return Row(
+             children: [
+               Container(
+-                color: Colors.white,
+-                width: getWith()/3,
++                color: Colors.white.withOpacity(0.6),
++                width: getWith() / 3,
+                 height: 65,
+                 child: RadioListTile(
+-                  title: Text(noteStateTitles[index]),
++                  title: Center(
++                      child: Text(
++                    noteStateTitles[index],
++                    style: TextStyle(fontSize: 12),
++                  )),
+                   value: noteStates[index],
+                   groupValue: widget.currentState,
+                   onChanged: (value) {
+Index: magic_notes/lib/views/add_note_screen.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/magic_notes/lib/views/add_note_screen.dart b/magic_notes/lib/views/add_note_screen.dart
+--- a/magic_notes/lib/views/add_note_screen.dart	(revision 56aa2e800348d6a1fa5c09f03de6094a8d9a8b23)
++++ b/magic_notes/lib/views/add_note_screen.dart	(date 1678892324603)
+@@ -27,9 +27,10 @@
+         title: const Text("Tạo ghi chú mới"),
+       ),
+       body: Container(
++        height: MediaQuery.of(context).size.height,
+         decoration: const BoxDecoration(
+           image: DecorationImage(
+-            image: AssetImage('assets/background.png'),
++            image: AssetImage('assets/background_5.gif'),
+             fit: BoxFit.cover,
+           ),
+         ),
+@@ -39,7 +40,7 @@
+               mainAxisAlignment: MainAxisAlignment.center,
+               children: [
+                 const SizedBox(
+-                  height: 20,
++                  height: 10,
+                 ),
+                 Text(
+                   "Tiêu đề",
+@@ -49,11 +50,23 @@
+                   width: 500,
+                   child: TextField(
+                     maxLength: 100,
++                    style: TextStyle(color: Colors.white),
++
+                     keyboardType: TextInputType.text,
+                     controller: noteTitleController,
+-                    decoration: const InputDecoration(
+-                      border: OutlineInputBorder(),
++                    decoration:  InputDecoration(
++                      labelStyle: const TextStyle(color: Colors.black54),
++                      focusedBorder: OutlineInputBorder(
++                        borderRadius: BorderRadius.circular(8),
++                        borderSide: const BorderSide(color: Colors.orange),
++                      ),
++                      border: OutlineInputBorder(
++                        borderRadius: BorderRadius.circular(8),
++                        borderSide: const BorderSide(color: Colors.orange),
++                      ),
+                       hintText: 'Nhập tiêu đề ghi chú của bạn!',
++                      counterStyle: TextStyle(color: Colors.deepOrange),
++                      hintStyle: TextStyle(color: Colors.white.withOpacity(0.8))
+                     ),
+                   ),
+                 ),
+@@ -66,16 +79,25 @@
+                 ),
+                 SizedBox(
+                   width: 500,
+-                  height: 300,
++                  height: 240,
+                   child: TextField(
+                     //expands: true, //Mở rộng tối đa
+                     textAlign: TextAlign.left,
+                     keyboardType: TextInputType.multiline,
+                     maxLines: 100,
+                     controller: noteDescriptionController,
+-                    decoration: const InputDecoration(
+-                      border: OutlineInputBorder(),
++                    decoration:  InputDecoration(
++                      labelStyle: const TextStyle(color: Colors.black54),
++                      focusedBorder: OutlineInputBorder(
++                        borderRadius: BorderRadius.circular(8),
++                        borderSide: const BorderSide(color: Colors.orange),
++                      ),
++                      border: OutlineInputBorder(
++                        borderRadius: BorderRadius.circular(8),
++                        borderSide: const BorderSide(color: Colors.orange),
++                      ),
+                       hintText: 'Nhập nội dung ghi chú của bạn!',
++                        hintStyle: TextStyle(color: Colors.white.withOpacity(0.8))
+                     ),
+                   ),
+                 ),
+Index: magic_notes/lib/views/detail_screen.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/magic_notes/lib/views/detail_screen.dart b/magic_notes/lib/views/detail_screen.dart
+--- a/magic_notes/lib/views/detail_screen.dart	(revision 56aa2e800348d6a1fa5c09f03de6094a8d9a8b23)
++++ b/magic_notes/lib/views/detail_screen.dart	(date 1678892463528)
+@@ -57,9 +57,10 @@
+         ],
+       ),
+       body: Container(
++        height: MediaQuery.of(context).size.height,
+         decoration: const BoxDecoration(
+           image: DecorationImage(
+-            image: AssetImage('assets/background.png'),
++            image: AssetImage('assets/background_2.gif'),
+             fit: BoxFit.cover,
+           ),
+         ),
+@@ -78,8 +79,8 @@
+                     style: textHeadline1.copyWith(color: Colors.deepOrange),
+                   ),
+                   SizedBox(
+-                    width: Platform.isAndroid || Platform.isIOS ? MediaQuery.of(context).size.width - 10 :500,
+-                    height: MediaQuery.of(context).size.height - 260,
++                    width: Platform.isAndroid || Platform.isIOS ? MediaQuery.of(context).size.width - 10 : 500,
++                    height: MediaQuery.of(context).size.height - 280,
+                     child: SingleChildScrollView(
+                       child: TextField(
+                         //expands: true, //Mở rộng tối đa
+@@ -87,10 +88,20 @@
+                         keyboardType: TextInputType.multiline,
+                         maxLines: 100,
+                         enabled: false,
++                        style: TextStyle(color: Colors.white),
+                         controller: noteDescriptionController,
+-                        decoration: const InputDecoration(
+-                          border: OutlineInputBorder(),
++                        decoration:  InputDecoration(
++                          labelStyle: const TextStyle(color: Colors.black54),
++                          focusedBorder: OutlineInputBorder(
++                            borderRadius: BorderRadius.circular(8),
++                            borderSide: const BorderSide(color: Colors.orange),
++                          ),
++                          border: OutlineInputBorder(
++                            borderRadius: BorderRadius.circular(8),
++                            borderSide: const BorderSide(color: Colors.orange),
++                          ),
+                           hintText: 'Nhập nội dung ghi chú của bạn!',
++                            hintStyle: TextStyle(color: Colors.white.withOpacity(0.8))
+                         ),
+                       ),
+                     ),
+@@ -103,7 +114,7 @@
+                     children: [
+                       Text(
+                         "Trạng thái hiện tại: ${note.noteState}",
+-                        style: textContent.copyWith(color: Colors.black),
++                        style: textContent.copyWith(color: Colors.white),
+                       ),
+                       //noteState,
+                       const SizedBox(
+@@ -111,7 +122,7 @@
+                       ),
+                       Text(
+                         "Thời gian tạo(sửa) ghi chú: ${note.noteCreatedTime}",
+-                        style: textContent.copyWith(color: Colors.black),
++                        style: textContent.copyWith(color: Colors.white),
+                       ),
+                     ],
+                   ),
+Index: magic_notes/lib/views/change_password_screen.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/magic_notes/lib/views/change_password_screen.dart b/magic_notes/lib/views/change_password_screen.dart
+--- a/magic_notes/lib/views/change_password_screen.dart	(revision 56aa2e800348d6a1fa5c09f03de6094a8d9a8b23)
++++ b/magic_notes/lib/views/change_password_screen.dart	(date 1678893834590)
+@@ -31,10 +31,10 @@
+           title: const Text("Đổi mật khẩu"),
+         ),
+         body: Container(
+-          height:MediaQuery.of(context).size.height,
++          height: MediaQuery.of(context).size.height,
+           decoration: const BoxDecoration(
+             image: DecorationImage(
+-              image: AssetImage('assets/background.png'),
++              image: AssetImage('assets/background_12.gif'),
+               fit: BoxFit.cover,
+             ),
+           ),
+@@ -59,14 +59,22 @@
+                       width: 500,
+                       child: TextField(
+                         maxLength: 100,
++                        style: TextStyle(color: Colors.white),
+                         keyboardType: TextInputType.text,
+                         enabled: false,
+                         controller: TextEditingController(text: userEmail),
+-                        decoration: const InputDecoration(
+-                          border: OutlineInputBorder(),
+-                          labelText: 'Địa chỉ email',
+-                          labelStyle: TextStyle(fontSize: 25),
+-                        ),
++                        decoration: InputDecoration(
++                            labelStyle: const TextStyle(color: Colors.black54, fontSize: 25),
++                            focusedBorder: OutlineInputBorder(
++                              borderRadius: BorderRadius.circular(8),
++                              borderSide: const BorderSide(color: Colors.orange),
++                            ),
++                            border: OutlineInputBorder(
++                              borderRadius: BorderRadius.circular(8),
++                              borderSide: const BorderSide(color: Colors.orange),
++                            ),
++                            labelText: 'Địa chỉ email',
++                            hintStyle: TextStyle(color: Colors.white.withOpacity(0.8))),
+                       ),
+                     ),
+                     const SizedBox(
+@@ -76,7 +84,7 @@
+                       width: 500,
+                       child: PasswordInput(
+                         hintText: 'Nhập mật khẩu mới của bạn!',
+-                        label: 'Mật khẩu mới',
++                        labelText: 'Mật khẩu mới',
+                         passwordController: passwordController,
+                       ),
+                     ),
+@@ -86,7 +94,7 @@
+                     SizedBox(
+                       width: 500,
+                       child: PasswordInput(
+-                        label: "Nhập lại mật khẩu",
++                        labelText: "Nhập lại mật khẩu",
+                         hintText: "Nhập lại mật khẩu mới của bạn!",
+                         passwordController: confirmPasswordController,
+                       ),
+Index: magic_notes/lib/views/widgets/password_input.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/magic_notes/lib/views/widgets/password_input.dart b/magic_notes/lib/views/widgets/password_input.dart
+--- a/magic_notes/lib/views/widgets/password_input.dart	(revision 56aa2e800348d6a1fa5c09f03de6094a8d9a8b23)
++++ b/magic_notes/lib/views/widgets/password_input.dart	(date 1678893855471)
+@@ -1,12 +1,12 @@
+ import 'package:flutter/material.dart';
+ 
+ class PasswordInput extends StatefulWidget {
+-  late String label;
++  late String labelText;
+   late String hintText;
+   late TextEditingController passwordController;
+ 
+   PasswordInput({
+-    required this.label,
++    required this.labelText,
+     required this.hintText,
+     required this.passwordController,
+     Key? key,
+@@ -28,8 +28,17 @@
+       obscureText: _passwordVisible,
+       //This will obscure text dynamically
+       decoration: InputDecoration(
+-        border: const OutlineInputBorder(),
+-        labelText: widget.label,
++        labelStyle: const TextStyle(color: Colors.black54),
++        focusedBorder: OutlineInputBorder(
++          borderRadius: BorderRadius.circular(8),
++          borderSide: const BorderSide(color: Colors.orange),
++        ),
++        border: OutlineInputBorder(
++          borderRadius: BorderRadius.circular(8),
++          borderSide: const BorderSide(color: Colors.orange),
++        ),
++        labelText: widget.labelText,
++        hintStyle: TextStyle(color: Colors.white.withOpacity(0.8)),
+         hintText: widget.hintText,
+         suffixIcon: IconButton(
+           onPressed: () {
+@@ -37,7 +46,10 @@
+               _passwordVisible = !_passwordVisible;
+             });
+           },
+-          icon: Icon(_passwordVisible ? Icons.visibility : Icons.visibility_off),
++          icon: Icon(
++            _passwordVisible ? Icons.visibility : Icons.visibility_off,
++            color: Colors.black54,
++          ),
+         ),
+       ),
+     );
+Index: magic_notes/lib/views/change_user_info_screen.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/magic_notes/lib/views/change_user_info_screen.dart b/magic_notes/lib/views/change_user_info_screen.dart
+--- a/magic_notes/lib/views/change_user_info_screen.dart	(revision 56aa2e800348d6a1fa5c09f03de6094a8d9a8b23)
++++ b/magic_notes/lib/views/change_user_info_screen.dart	(date 1678894129001)
+@@ -36,7 +36,7 @@
+         body: Container(
+           decoration: const BoxDecoration(
+             image: DecorationImage(
+-              image: AssetImage('assets/background.png'),
++              image: AssetImage('assets/background_8.gif'),
+               fit: BoxFit.cover,
+             ),
+           ),
+@@ -61,29 +61,45 @@
+                     SizedBox(
+                       width: 500,
+                       child: TextField(
++                        style: TextStyle(color: Colors.white),
+                         maxLength: 100,
+                         keyboardType: TextInputType.text,
+                         controller: userNameController,
+-                        decoration: const InputDecoration(
+-                          border: OutlineInputBorder(),
+-                          labelText: 'Tên người dùng',
+-                          hintText: 'Nhập tên người dùng mới',
+-                          labelStyle: TextStyle(fontSize: 25),
+-                        ),
++                        decoration: InputDecoration(
++                            labelStyle: TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 25),
++                            focusedBorder: OutlineInputBorder(
++                              borderRadius: BorderRadius.circular(8),
++                              borderSide: const BorderSide(color: Colors.orange),
++                            ),
++                            border: OutlineInputBorder(
++                              borderRadius: BorderRadius.circular(8),
++                              borderSide: const BorderSide(color: Colors.orange),
++                            ),
++                            labelText: 'Tên người dùng',
++                            hintText: 'Nhập tên người dùng mới',
++                            hintStyle: TextStyle(color: Colors.white.withOpacity(0.8))),
+                       ),
+                     ),
+                     SizedBox(
+                       width: 500,
+                       child: TextField(
++                        style: TextStyle(color: Colors.white),
+                         maxLength: 100,
+                         keyboardType: TextInputType.text,
+                         controller: userDescriptionController,
+-                        decoration: const InputDecoration(
+-                          border: OutlineInputBorder(),
+-                          labelText: 'Mô tả',
+-                          hintText: 'Nhập mô tả người dùng mới',
+-                          labelStyle: TextStyle(fontSize: 25),
+-                        ),
++                        decoration: InputDecoration(
++                            labelStyle: TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 25),
++                            focusedBorder: OutlineInputBorder(
++                              borderRadius: BorderRadius.circular(8),
++                              borderSide: const BorderSide(color: Colors.orange),
++                            ),
++                            border: OutlineInputBorder(
++                              borderRadius: BorderRadius.circular(8),
++                              borderSide: const BorderSide(color: Colors.orange),
++                            ),
++                            labelText: 'Mô tả',
++                            hintText: 'Nhập mô tả người dùng mới',
++                            hintStyle: TextStyle(color: Colors.white.withOpacity(0.8))),
+                       ),
+                     ),
+                     const SizedBox(
+@@ -107,27 +123,24 @@
+                           ref.read(userProvider).changeUserInfo(USER_ID, userName, userDescription).then((value) async {
+                             if (value!.code == 200) {
+                               await Future.delayed(Duration(milliseconds: 500)).then((value) => showDialog(
+-                                context: context,
+-                                builder: (context) {
+-                                  return dialogNotification(context, "KẾT QUẢ", "Đổi thông tin người dùng thành công!");
+-                                },
+-                              ));
+-
++                                    context: context,
++                                    builder: (context) {
++                                      return dialogNotification(context, "KẾT QUẢ", "Đổi thông tin người dùng thành công!");
++                                    },
++                                  ));
+                             } else {
+                               await Future.delayed(Duration(milliseconds: 500)).then((value) => showDialog(
+-                                context: context,
+-                                builder: (context) {
+-                                  return dialogNotification(context, "KẾT QUẢ", "Đổi thông tin người dùng thất bại!");
+-                                },
+-                              ));
+-
++                                    context: context,
++                                    builder: (context) {
++                                      return dialogNotification(context, "KẾT QUẢ", "Đổi thông tin người dùng thất bại!");
++                                    },
++                                  ));
+                             }
+                           }).then((value) {
+                             context.pop();
+                             context.pop();
+                           });
+                           //context.pop();
+-
+                         }
+                       },
+                     ),
+Index: magic_notes/lib/views/widgets/note_item.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/magic_notes/lib/views/widgets/note_item.dart b/magic_notes/lib/views/widgets/note_item.dart
+--- a/magic_notes/lib/views/widgets/note_item.dart	(revision 56aa2e800348d6a1fa5c09f03de6094a8d9a8b23)
++++ b/magic_notes/lib/views/widgets/note_item.dart	(date 1678894334379)
+@@ -21,12 +21,12 @@
+         height: 250,
+         width: 250,
+         child: Card(
+-          color: Colors.white,
++          color: Colors.white.withOpacity(0.4),
+           shape: RoundedRectangleBorder(
+             borderRadius: BorderRadius.circular(10),
+           ),
+           elevation: 10.0,
+-          shadowColor: Colors.orange,
++          shadowColor: Colors.white.withOpacity(0.3),
+           child: SizedBox(
+             height: 50,
+             child: Padding(
+Index: magic_notes/lib/views/home_screen.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/magic_notes/lib/views/home_screen.dart b/magic_notes/lib/views/home_screen.dart
+--- a/magic_notes/lib/views/home_screen.dart	(revision 56aa2e800348d6a1fa5c09f03de6094a8d9a8b23)
++++ b/magic_notes/lib/views/home_screen.dart	(date 1678895266649)
+@@ -24,6 +24,7 @@
+     return Scaffold(
+       appBar: AppBar(
+         backgroundColor: Colors.orange,
++
+         leading: Builder(
+           builder: (context) => IconButton(
+             icon: const Icon(Icons.account_circle),
+@@ -36,43 +37,51 @@
+         ),
+         title: const Text("MagicNotes"),
+       ),
+-      body: Padding(
+-        padding: EdgeInsets.all(8.0),
+-        child: notes.when(
+-          data: (data) {
+-            final list = data?.data as List;
+-            final List<Note> listNote = list.map((note) => Note.fromJson(note)).toList();
+-            if (Platform.isAndroid || Platform.isIOS) {
+-              return Center(
+-                child: GridView.count(
+-                  crossAxisCount: 2,
+-                  crossAxisSpacing: 4,
+-                  mainAxisSpacing: 8,
+-                  childAspectRatio: 0.86,
+-                  scrollDirection: Axis.vertical,
+-                  children: List.generate(listNote.length, (index) {
+-                    return NoteItem(note: listNote[index]);
+-                  }),
+-                ),
+-              );
+-            } else {
+-              return SingleChildScrollView(
+-                child: Center(
+-                  child: Wrap(
+-                    spacing: 8.0, // gap between adjacent chips
+-                    runSpacing: 4.0, // gap between lines
+-                    children: List.generate(listNote.length, (index) {
+-                      return NoteItem(note: listNote[index]);
+-                    }),
+-                  ),
+-                ),
+-              );
+-            }
+-          },
+-          error: (error, stackTrace) {
+-            return const Center(child: Text("Có lỗi xảy ra, vui lòng chờ chút hoặc mở lại ứng dụng của bạn!"));
+-          },
+-          loading: () => const Center(child: CircularProgressIndicator(color: Colors.orange)),
++      body: Container(
++        decoration: const BoxDecoration(
++          image: DecorationImage(
++            image: AssetImage('assets/background_9.gif'),
++            fit: BoxFit.cover,
++          ),
++        ),
++        child: Padding(
++          padding: EdgeInsets.all(8.0),
++          child: notes.when(
++            data: (data) {
++              final list = data?.data as List;
++              final List<Note> listNote = list.map((note) => Note.fromJson(note)).toList();
++              if (Platform.isAndroid || Platform.isIOS) {
++                return Center(
++                  child: GridView.count(
++                    crossAxisCount: 2,
++                    crossAxisSpacing: 4,
++                    mainAxisSpacing: 8,
++                    childAspectRatio: 0.86,
++                    scrollDirection: Axis.vertical,
++                    children: List.generate(listNote.length, (index) {
++                      return NoteItem(note: listNote[index]);
++                    }),
++                  ),
++                );
++              } else {
++                return SingleChildScrollView(
++                  child: Center(
++                    child: Wrap(
++                      spacing: 8.0, // gap between adjacent chips
++                      runSpacing: 4.0, // gap between lines
++                      children: List.generate(listNote.length, (index) {
++                        return NoteItem(note: listNote[index]);
++                      }),
++                    ),
++                  ),
++                );
++              }
++            },
++            error: (error, stackTrace) {
++              return const Center(child: Text("Có lỗi xảy ra, vui lòng chờ chút hoặc mở lại ứng dụng của bạn!"));
++            },
++            loading: () => const Center(child: CircularProgressIndicator(color: Colors.orange)),
++          ),
+         ),
+       ),
+       floatingActionButton: FloatingActionButton.extended(
+@@ -88,7 +97,7 @@
+             ],
+           )),
+       drawer: Drawer(
+-        width: 300,
++        width: Platform.isAndroid || Platform.isIOS ? 300 : 380,
+         child: UserInfo(userId: userId!),
+       ),
+     );
+diff --git a/MagicNotesServer/main_real.py b/MagicNotesServer/main_real.py
+deleted file mode 100644
+index 9322b322937bf90744d1f2d58cd3d91fa608a88d..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+Hc$@<O00001
+
