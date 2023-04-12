@@ -26,46 +26,52 @@ class UserInfo extends ConsumerWidget {
     return SafeArea(
       child: Container(
         color: Colors.yellow.shade200,
-        padding: EdgeInsets.only(left: 6, right: 2),
+        padding: EdgeInsets.only(left: 8, top: 8),
         child: Stack(
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Container(
-                  color: Colors.orange,
+                  //color: Colors.orange,
                   height: 50,
                   child: Text(
                     "Xin chào ${userInfo != null ? userInfo!.userName : ""}",
-                    style: textHeadline1.copyWith(backgroundColor: Colors.orange),
+                    style: textHeadline1.copyWith(color: Colors.orange),
                     overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 SizedBox(
                   height: 10,
                 ),
-                InkWell(
-                  child: imageLocal == null
-                      ? CircleAvatar(
-                          backgroundImage: NetworkImage(userPhotoURL),
-                          backgroundColor: Colors.orange,
-                          maxRadius: 100,
-                          minRadius: 20,
-                        )
-                      : CircleAvatar(
-                          backgroundImage: MemoryImage(imageLocal!),
-                          backgroundColor: Colors.orange,
-                          maxRadius: 100,
-                          minRadius: 20,
-                        ),
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return DialogUserPhoto(photoURL: userPhotoURL);
-                      },
-                    );
-                  },
+                CircleAvatar(
+                  backgroundColor: Colors.orange,
+                  maxRadius: 105,
+                  minRadius: 25,
+                  child: InkWell(
+                    child: imageLocal == null
+                        ? CircleAvatar(
+                            backgroundImage: NetworkImage(userPhotoURL),
+                            backgroundColor: Colors.orange,
+                            maxRadius: 100,
+                            minRadius: 20,
+                          )
+                        : CircleAvatar(
+                            backgroundImage: MemoryImage(imageLocal!),
+                            backgroundColor: Colors.orange,
+                            maxRadius: 100,
+                            minRadius: 20,
+                          ),
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return DialogUserPhoto(photoURL: userPhotoURL);
+                        },
+                      );
+                    },
+                  ),
                 ),
                 SizedBox(
                   height: 20,
@@ -73,6 +79,9 @@ class UserInfo extends ConsumerWidget {
                 Text("Tên tài khoản: ${userInfo != null ? userInfo!.userName : ""}"),
                 Text("Địa chỉ email: ${userInfo != null ? userInfo!.userEmail : ""}"),
                 Text("Mô tả: ${userInfo != null ? userInfo!.userDescription : ""}"),
+                SizedBox(
+                  height: 10,
+                ),
                 TextButton(
                     onPressed: () {
                       context.push('/changepass', extra: userInfo?.userEmail);
