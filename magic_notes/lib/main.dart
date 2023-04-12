@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:magic_notes/utils/constants.dart';
 import 'package:magic_notes/utils/style.dart';
@@ -28,6 +29,12 @@ void main() async {
     });
     runApp(ProviderScope(child: MyAppWindows()));
   } else {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+          statusBarColor: Colors.orange, //Màu thanh status bar
+          systemNavigationBarColor: Colors.orange //màu thanh 3 nút bên dưới
+          ),
+    );
     runApp(ProviderScope(child: MyApp()));
   }
 }

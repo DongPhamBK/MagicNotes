@@ -136,7 +136,7 @@ class UpdateNoteScreen extends ConsumerWidget {
                             await showDialog(
                               context: context,
                               builder: (context) {
-                                Future.delayed(Duration(seconds: 2));
+                                ref.invalidate(noteListProvider); //Cập nhật lại danh sách
                                 return dialogNotification(context, "KẾT QUẢ", "Cập nhật ghi chú thành công!");
                               },
                             );

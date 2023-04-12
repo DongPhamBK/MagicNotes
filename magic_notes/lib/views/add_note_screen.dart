@@ -118,10 +118,11 @@ class AddNoteScreen extends ConsumerWidget {
                             var res = await showDialog<String>(
                               context: context,
                               builder: (context) {
+                                ref.invalidate(noteListProvider); //Cập nhật lại danh sách
                                 return dialogNotification(context, "KẾT QUẢ", "Thêm ghi chú thành công!");
                               },
                             );
-                            print("Giá trị trả về từ dialog: $res");
+                            // print("Giá trị trả về từ dialog: $res");
                           } else {
                             await Future.delayed(Duration(milliseconds: 100));
                             await showDialog(

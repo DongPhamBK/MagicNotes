@@ -119,6 +119,7 @@ class ChangeUserInfoScreen extends ConsumerWidget {
                                 await Future.delayed(Duration(milliseconds: 100)).then((value) => showDialog(
                                       context: context,
                                       builder: (context) {
+                                        ref.invalidate(userProvider); //Cập nhật lại thông tin người dùng
                                         return dialogNotification(context, "KẾT QUẢ", "Đổi thông tin người dùng thành công!");
                                       },
                                     ));

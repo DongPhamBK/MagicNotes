@@ -21,7 +21,7 @@ class UserInfo extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var userInfo = ref.watch(userProvider).userInfo;
     var userPhotoURL = ref.watch(userProvider).userPhotoURL;
-    print("UserInfo build");
+    //print("UserInfo build");
     //print("Local $imageLocalURL");
     return SafeArea(
       child: Container(

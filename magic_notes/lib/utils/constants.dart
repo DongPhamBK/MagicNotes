@@ -6,6 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Constants {
   static const BASE_URL = "https://dongpt.pythonanywhere.com/v1";
+  static const userPhotoURL =
+      "https://firebasestorage.googleapis.com/v0/b/magicnotes2023.appspot.com/o/default.png?alt=media&token=64e3cfdc-afcf-4660-8294-f46d95db9833";
 }
 
 final options = BaseOptions(
@@ -26,7 +28,7 @@ final Dio dio = Dio(options);
 String USER_ID = "";
 
 //Quá gắt
-BuildContext? GLOBAL_CONTEXT = null;
+BuildContext? GLOBAL_CONTEXT;
 
 extension convert on String {
   String toVietnamese() {
@@ -42,7 +44,7 @@ extension convert on String {
 }
 
 //Mã lưu mật khẩu
-SharedPreferences? prefs = null;
+SharedPreferences? prefs;
 
 //Lưu ảnh hiện tại
-Uint8List? imageLocal = null;
+Uint8List? imageLocal;

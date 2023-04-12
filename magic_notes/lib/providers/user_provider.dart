@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:magic_notes/models/data_response.dart';
 import 'package:magic_notes/models/user.dart';
 import 'package:magic_notes/repository/user_repository.dart';
+import 'package:magic_notes/utils/constants.dart';
 
 class UserNotifier extends ChangeNotifier {
   late UserRepository userRepository; //Kho
@@ -13,8 +14,7 @@ class UserNotifier extends ChangeNotifier {
   String? changePasswordResult = ""; //Kết quả thay đổi mật khẩu
   User? userInfo; //Thông tin cá nhân
   //Ảnh cá nhân mặc định
-  String userPhotoURL =
-      "https://firebasestorage.googleapis.com/v0/b/magicnotes2023.appspot.com/o/default.png?alt=media&token=64e3cfdc-afcf-4660-8294-f46d95db9833";
+  String userPhotoURL = Constants.userPhotoURL;
 
   UserNotifier({required this.userRepository});
 
