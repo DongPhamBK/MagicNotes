@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:magic_notes/models/user.dart';
@@ -41,9 +42,18 @@ class LoginScreen extends ConsumerWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        "MAGICNOTES",
-                        style: textHeadline1.copyWith(color: Colors.deepOrange, fontSize: 32),
+                      Animate(
+                        effects: [
+                          ShimmerEffect(
+                            duration: Duration(milliseconds: 5000),
+                            color: Colors.yellow
+                          ),
+                        ],
+                        onPlay: (controller) => controller.repeat(reverse: false),
+                        child: Text(
+                          "MAGICNOTES",
+                          style: textHeadline1.copyWith(color: Colors.deepOrange, fontSize: 32),
+                        ),
                       ),
                       SizedBox(
                         height: 20,

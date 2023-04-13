@@ -50,6 +50,7 @@ dependencies:
   custom_lint: ^0.3.3
   build_runner: ^2.3.3
   riverpod_generator: ^2.1.6
+  flutter_animate: ^4.1.1+1
 
 dev_dependencies:
   flutter_test:
