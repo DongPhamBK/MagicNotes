@@ -119,7 +119,7 @@ class LoginScreen extends ConsumerWidget {
                               (response) {
                                 USER_ID = response!.data;
                                 if (response!.code == 200) {
-                                  context.goNamed('/home', params: {'userId': response.data});
+                                  context.goNamed('/home', extra: USER_ID);
                                 }
                               },
                             );

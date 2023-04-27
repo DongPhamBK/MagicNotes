@@ -38,12 +38,13 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
-      path: '/home/:userId', //có params phải làm thế này!
+      path: '/home', //Cập nhật extra tránh công khai userId
       name: '/home',
       builder: (context, state) {
         GLOBAL_CONTEXT = context;
+        String userId = state.extra as String;
         return HomeScreen(
-          userId: state.params['userId'],
+          userId: userId,
         );
       },
     ),
@@ -105,4 +106,8 @@ final GoRouter router = GoRouter(
       },
     ),
   ],
+  errorBuilder: (context, state) => LoginScreen(), //Nếu điều hướng lỗi, về trang khởi tạo!
+  redirect: (context, state) => auth(), //Đăng nhập đồng nghĩa với tồn tại USER_ID, xác thực
 );
+
+String? auth() => USER_ID == "" ? '/login' : null;
