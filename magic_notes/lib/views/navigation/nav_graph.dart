@@ -43,10 +43,9 @@ final GoRouter router = GoRouter(
       builder: (context, state) {
         GLOBAL_CONTEXT = context;
         String userId = state.extra as String;
-        return HomeScreen(
-          userId: userId,
-        );
+        return HomeScreen(userId: userId);
       },
+      redirect: (context, state) => auth(), //Đăng nhập đồng nghĩa với tồn tại USER_ID, xác thực
     ),
     GoRoute(
       path: '/changepass',
@@ -55,6 +54,7 @@ final GoRouter router = GoRouter(
         String userEmail = state.extra as String; // dùng extra có khi xịn hơn
         return ChangePasswordScreen(userEmail: userEmail);
       },
+      redirect: (context, state) => auth(), //Đăng nhập đồng nghĩa với tồn tại USER_ID, xác thực
     ),
     GoRoute(
       path: '/addnote',
@@ -62,23 +62,28 @@ final GoRouter router = GoRouter(
         GLOBAL_CONTEXT = context;
         return AddNoteScreen();
       },
+      redirect: (context, state) => auth(), //Đăng nhập đồng nghĩa với tồn tại USER_ID, xác thực
     ),
     GoRoute(
-        path: '/detail',
-        name: '/detail',
-        builder: (context, state) {
-          GLOBAL_CONTEXT = context;
-          Note note = state.extra as Note;
-          return DetailScreen(note: note);
-        }),
+      path: '/detail',
+      name: '/detail',
+      builder: (context, state) {
+        GLOBAL_CONTEXT = context;
+        Note note = state.extra as Note;
+        return DetailScreen(note: note);
+      },
+      redirect: (context, state) => auth(), //Đăng nhập đồng nghĩa với tồn tại USER_ID, xác thực
+    ),
     GoRoute(
-        path: '/updatenote',
-        name: '/updatenote',
-        builder: (context, state) {
-          GLOBAL_CONTEXT = context;
-          Note note = state.extra as Note;
-          return UpdateNoteScreen(note: note);
-        }),
+      path: '/updatenote',
+      name: '/updatenote',
+      builder: (context, state) {
+        GLOBAL_CONTEXT = context;
+        Note note = state.extra as Note;
+        return UpdateNoteScreen(note: note);
+      },
+      redirect: (context, state) => auth(), //Đăng nhập đồng nghĩa với tồn tại USER_ID, xác thực
+    ),
     GoRoute(
       path: '/forgetpass',
       builder: (context, state) {
@@ -87,15 +92,17 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
-      path: '/changeuserinfo/:userName/:userDescription', //có params phải làm thế này!
+      path: '/changeuserinfo', //có params phải làm thế này!
       name: '/changeuserinfo',
       builder: (context, state) {
         GLOBAL_CONTEXT = context;
+        Map map = state.extra as Map;
         return ChangeUserInfoScreen(
-          userName: state.params['userName'],
-          userDescription: state.params['userDescription'],
+          userName: map['userName'],
+          userDescription: map['userDescription'],
         );
       },
+      redirect: (context, state) => auth(), //Đăng nhập đồng nghĩa với tồn tại USER_ID, xác thực
     ),
     GoRoute(
       path: '/search',
@@ -104,10 +111,10 @@ final GoRouter router = GoRouter(
         GLOBAL_CONTEXT = context;
         return SearchScreen();
       },
+      redirect: (context, state) => auth(), //Đăng nhập đồng nghĩa với tồn tại USER_ID, xác thực
     ),
   ],
   errorBuilder: (context, state) => LoginScreen(), //Nếu điều hướng lỗi, về trang khởi tạo!
-  redirect: (context, state) => auth(), //Đăng nhập đồng nghĩa với tồn tại USER_ID, xác thực
 );
 
 String? auth() => USER_ID == "" ? '/login' : null;

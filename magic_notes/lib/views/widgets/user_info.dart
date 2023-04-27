@@ -89,7 +89,7 @@ class UserInfo extends ConsumerWidget {
                     child: Text("Đổi mật khẩu")),
                 TextButton(
                     onPressed: () {
-                      context.pushNamed('/changeuserinfo', params: {'userName': userInfo!.userName!, 'userDescription': userInfo!.userDescription!});
+                      context.pushNamed('/changeuserinfo', extra: {'userName': userInfo!.userName!, 'userDescription': userInfo!.userDescription!});
                     },
                     child: Text("Thay đổi thông tin người dùng")),
               ],
