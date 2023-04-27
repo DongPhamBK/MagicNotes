@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:magic_notes/models/note.dart';
 import 'package:magic_notes/providers/note_provider.dart';
 import 'package:magic_notes/utils/style.dart';
+import 'package:magic_notes/views/responsive.dart';
 import 'package:magic_notes/views/widgets/button.dart';
 import 'package:magic_notes/views/widgets/dialog_notification.dart';
 import 'package:magic_notes/views/widgets/note_state_option.dart';
@@ -71,8 +72,8 @@ class AddNoteScreen extends ConsumerWidget {
                     style: textHeadline1.copyWith(color: Colors.deepOrange),
                   ),
                   SizedBox(
-                    width: Platform.isWindows ? 500 : MediaQuery.of(context).size.width - 10,
-                    height: Platform.isWindows ? 300 : 250,
+                    width: Responsive.isDesktop(context) ? 500 : MediaQuery.of(context).size.width - 10,
+                    height: Responsive.isDesktop(context) ? 300 : 250,
                     child: TextField(
                       //expands: true, //Mở rộng tối đa
                       textAlign: TextAlign.left,

@@ -19,6 +19,7 @@ class UserServices {
       final data = user.toJsonLogin();
       //print("Dữ liệu vào: $data");
       Response response = await dio.post("$BASE_URL/login", data: data);
+
       //print(response.data);
 
       dataResponse = DataResponse.fromJson(response.data);

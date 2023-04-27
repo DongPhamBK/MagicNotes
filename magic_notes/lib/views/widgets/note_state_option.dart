@@ -1,6 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+
+import '../responsive.dart';
 
 final List<String> noteStates = ['Unstarted', 'In Process', 'Done'];
 final List<String> noteStateTitles = ['Chưa bắt đầu', 'Đang thực hiện', 'Hoàn thành'];
@@ -38,10 +38,10 @@ class _NoteStateOptionState extends State<NoteStateOption> {
       child: Center(
         child: ListView.builder(
           itemBuilder: (context, index) {
-            return Platform.isWindows ? noteStateOptionWindows(index): noteStateOption(index);
+            return Responsive.isDesktop(context) ? noteStateOptionWindows(index): noteStateOption(index);
           },
           itemCount: noteStates.length,
-          scrollDirection: Platform.isWindows? Axis.horizontal : Axis.vertical,
+          scrollDirection: Responsive.isDesktop(context)? Axis.horizontal : Axis.vertical,
         ),
       ),
     );
@@ -49,7 +49,7 @@ class _NoteStateOptionState extends State<NoteStateOption> {
 
   double getWith() {
     final width = MediaQuery.of(context).size.width;
-    if (Platform.isAndroid || Platform.isIOS) {
+    if (Responsive.isMobile(context)) {
       return width - 10.0;
     } else {
       if (width > 510.0) {

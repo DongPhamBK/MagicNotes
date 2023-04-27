@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:magic_notes/providers/user_provider.dart';
 import 'package:magic_notes/utils/style.dart';
-
+import 'package:mime/mime.dart';
 import '../../utils/constants.dart';
 import 'dialog_notification.dart';
 
@@ -55,31 +55,61 @@ class _DialogUserPhotoState extends ConsumerState<DialogUserPhoto> {
       actions: [
         TextButton(
           onPressed: () async {
-            final result = await FilePicker.platform.pickFiles(
-              allowMultiple: false, //Chỉ chọn 1 ảnh
-              type: FileType.custom, //Loại custom tùy chỉnh kiểu dữ liệu
-              allowedExtensions: ['jpg', 'png', 'jpeg'], //Loại dữ liệu
-            );
-            if (result == null) return; //Không có ảnh thì thôi
-            // final files = result.files; //EDIT: THIS PROBABLY CAUSED YOU AN ERROR
-            newPhotoURL = await result.files.first.path.toString();
-            var size = await File(newPhotoURL).lengthSync();
-            // print(size);
-            if (size > 1602392) {
-              // ignore: use_build_context_synchronously
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return dialogNotification(context, "CHÚ Ý", "Ảnh phải có kích thước dưới 1.5MB!");
-                },
+            FilePickerResult? pickFile; //Ảnh được chọn
+            if (kIsWeb) {
+              pickFile = await FilePicker.platform.pickFiles(
+                allowMultiple: false, //Chỉ chọn 1 ảnh
+                type: FileType.any, // Loại file bất kỳ
               );
+              //Kiểm tra loại File
+              if (pickFile == null) return; //Không có ảnh thì thôi
+              final pickFileType = lookupMimeType(pickFile!.files.first.name);
+              // final files = result.files; //EDIT: THIS PROBABLY CAUSED YOU AN ERROR
+              newPhotoURL = await pickFile.files.first.bytes;
+              final int size = await pickFile!.files.first.bytes!.length;
+              if (!pickFileType!.contains("image/jpeg") || size > 1602392) {
+                // ignore: use_build_context_synchronously
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return dialogNotification(context, "CHÚ Ý", "Định dạng ảnh phải là JPG, PNG hoặc JPEG!\nẢnh phải có kích thước dưới 1.5MB!");
+                  },
+                );
+              } else {
+                //Cập nhật hiển thị
+                imageLocal = newPhotoURL; //Cập nhật thẳng
+                setState(() {
+                  photo = MemoryImage(imageLocal!);
+                  saveImage = true;
+                });
+              }
             } else {
-              //Cập nhật hiển thị
-              photo = FileImage(File(newPhotoURL));
-              setState(() {
-                //print(newPhotoURL);
-                saveImage = true;
-              });
+              pickFile = await FilePicker.platform.pickFiles(
+                allowMultiple: false, //Chỉ chọn 1 ảnh
+                type: FileType.custom, //Loại custom tùy chỉnh kiểu dữ liệu
+                allowedExtensions: ['jpg', 'png', 'jpeg'], //Loại dữ liệu
+              );
+              if (pickFile == null) return; //Không có ảnh thì thôi
+              // final files = result.files; //EDIT: THIS PROBABLY CAUSED YOU AN ERROR
+              newPhotoURL = await pickFile.files.first.path.toString();
+              var size = await File(newPhotoURL).lengthSync();
+              // print(size);
+              if (size > 1602392) {
+                // ignore: use_build_context_synchronously
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return dialogNotification(context, "CHÚ Ý", "Ảnh phải có kích thước dưới 1.5MB!");
+                  },
+                );
+              } else {
+                //Cập nhật hiển thị
+                photo = FileImage(File(newPhotoURL));
+                setState(() {
+                  //print(newPhotoURL);
+                  saveImage = true;
+                });
+              }
             }
           },
           child: Text(
@@ -90,17 +120,31 @@ class _DialogUserPhotoState extends ConsumerState<DialogUserPhoto> {
         if (saveImage)
           TextButton(
             onPressed: () {
-              final bytes = File(newPhotoURL).readAsBytesSync();
-              //Định dạng base64
-              String img64 = base64Encode(bytes);
-              ref.read(userProvider).changeUserPhoto(USER_ID, img64);
-              setState(() {
-                //Lưu trữ local để hiển thị
-                //Lí do kỹ thuật!
-                imageLocal = base64Decode(img64);
-                ref.read(userProvider).getUserPhoto(USER_ID);//Chỉnh lại, tăng tốc nhanh hơn!
-                context.pop();
-              });
+              if (kIsWeb) {
+                final bytes = newPhotoURL; //Định dạng bytes sẵn rồi nên không cần!
+                //Định dạng base64
+                String img64 = base64Encode(bytes);
+                ref.read(userProvider).changeUserPhoto(USER_ID, img64);
+                setState(() {
+                  //Lưu trữ local để hiển thị
+                  //Lí do kỹ thuật!
+                  imageLocal = base64Decode(img64);
+                  ref.read(userProvider).getUserPhoto(USER_ID); //Chỉnh lại, tăng tốc nhanh hơn!
+                  context.pop();
+                });
+              } else {
+                final bytes = File(newPhotoURL).readAsBytesSync();
+                //Định dạng base64
+                String img64 = base64Encode(bytes);
+                ref.read(userProvider).changeUserPhoto(USER_ID, img64);
+                setState(() {
+                  //Lưu trữ local để hiển thị
+                  //Lí do kỹ thuật!
+                  imageLocal = base64Decode(img64);
+                  ref.read(userProvider).getUserPhoto(USER_ID); //Chỉnh lại, tăng tốc nhanh hơn!
+                  context.pop();
+                });
+              }
             },
             child: Text(
               "Lưu ảnh",

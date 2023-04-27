@@ -1,10 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:magic_notes/models/note.dart';
 import 'package:magic_notes/providers/note_provider.dart';
+import 'package:magic_notes/views/responsive.dart';
 import 'package:magic_notes/views/widgets/note_item.dart';
 import 'package:magic_notes/views/widgets/user_info.dart';
 
@@ -53,7 +52,7 @@ class HomeScreen extends ConsumerWidget {
           data: (data) {
             final list = data?.data as List;
             final List<Note> listNote = list.map((note) => Note.fromJson(note)).toList();
-            if (Platform.isAndroid || Platform.isIOS) {
+            if (Responsive.isMobile(context)) {
               return Center(
                 child: GridView.count(
                   crossAxisCount: 2,

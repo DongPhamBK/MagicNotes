@@ -1,5 +1,5 @@
-import 'dart:io';
-
+import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,12 +12,11 @@ import 'package:window_manager/window_manager.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   prefs = await SharedPreferences.getInstance();
-  //Tương tác chỉ dùng cho Windows
-  if (Platform.isWindows) {
+  if (kIsWeb) {
+    runApp(ProviderScope(child: MyApp()));
+  } else if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
     await windowManager.ensureInitialized();
-    //WindowManager.instance.setMinimumSize(Size(600, 760));
     WindowOptions windowOptions = WindowOptions(
-      size: Size(860, 820),
       minimumSize: Size(600, 780),
       center: true,
       title: "Magic Notes",
@@ -46,7 +45,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: router,
-      theme: ThemeData(fontFamily: 'NotoSerif'),
+      theme: ThemeData(
+        fontFamily: 'NotoSerif',
+        useMaterial3: true,
+      ),
       debugShowCheckedModeBanner: false,
     );
   }

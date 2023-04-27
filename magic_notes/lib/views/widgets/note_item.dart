@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -7,6 +6,7 @@ import 'package:magic_notes/utils/constants.dart';
 import 'package:magic_notes/utils/style.dart';
 
 import '../../models/note.dart';
+import '../responsive.dart';
 
 class NoteItem extends StatelessWidget {
   late Note note;
@@ -31,7 +31,7 @@ class NoteItem extends StatelessWidget {
           shadowColor: Colors.orange,
           child: SizedBox(
             height: 50,
-            child: Platform.isWindows ? noteItemWindows() : noteItemMobile(),
+            child: Responsive.isDesktop(context) || Responsive.isTablet(context) ? noteItemWindows() : noteItemMobile(),
           ),
         ),
       ),

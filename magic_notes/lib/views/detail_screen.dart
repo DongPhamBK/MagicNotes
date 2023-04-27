@@ -1,9 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:magic_notes/providers/note_provider.dart';
+import 'package:magic_notes/views/responsive.dart';
 import 'package:magic_notes/views/widgets/button.dart';
 import 'package:magic_notes/views/widgets/dialog_confirm.dart';
 
@@ -95,7 +94,7 @@ class DetailScreen extends ConsumerWidget {
                   bottom: 160,
                   child: Center(
                     child: SizedBox(
-                      width: Platform.isAndroid || Platform.isIOS ? MediaQuery.of(context).size.width - 10 : 500,
+                      width: Responsive.isMobile(context) ? MediaQuery.of(context).size.width - 10 : 500,
                       child: SingleChildScrollView(
                         //reverse: true, // Xem ngược
                         child: TextField(

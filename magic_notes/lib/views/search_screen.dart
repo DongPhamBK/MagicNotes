@@ -1,11 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:magic_notes/models/note.dart';
 import 'package:magic_notes/providers/note_provider.dart';
+import 'package:magic_notes/views/responsive.dart';
 import 'package:magic_notes/views/widgets/note_item.dart';
 
 import '../utils/constants.dart';
@@ -81,7 +79,7 @@ class SearchScreen extends ConsumerWidget {
                   );
                 }
                 if(isLoading) return Center(child: CircularProgressIndicator(color: Colors.orange));
-                if (Platform.isAndroid || Platform.isIOS) {
+                if (Responsive.isMobile(context)) {
                   return Center(
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width,

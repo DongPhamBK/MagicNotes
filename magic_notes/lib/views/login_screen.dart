@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:magic_notes/models/user.dart';
 import 'package:magic_notes/providers/password_provider.dart';
 import 'package:magic_notes/providers/user_provider.dart';
+import 'package:magic_notes/views/responsive.dart';
 import 'package:magic_notes/views/widgets/button.dart';
 import 'package:magic_notes/views/widgets/dialog_notification.dart';
 import 'package:magic_notes/views/widgets/password_input.dart';
@@ -44,10 +43,7 @@ class LoginScreen extends ConsumerWidget {
                     children: [
                       Animate(
                         effects: [
-                          ShimmerEffect(
-                            duration: Duration(milliseconds: 5000),
-                            color: Colors.yellow
-                          ),
+                          ShimmerEffect(duration: Duration(milliseconds: 5000), color: Colors.yellow),
                         ],
                         onPlay: (controller) => controller.repeat(reverse: false),
                         child: Text(
@@ -147,11 +143,11 @@ class LoginScreen extends ConsumerWidget {
               ),
               Positioned(
                 bottom: 20,
-                left: Platform.isWindows ? 20 : 10,
+                left: Responsive.isDesktop(context) ? 20 : 10,
                 child: InkWell(
                   child: Text(
                     "Đăng ký",
-                    style: textHeadline1.copyWith(color: Colors.orange, fontSize: Platform.isWindows ? 20 : 14),
+                    style: textHeadline1.copyWith(color: Colors.orange, fontSize: Responsive.isDesktop(context) ? 20 : 14),
                   ),
                   onTap: () {
                     context.push('/signup');
@@ -160,11 +156,11 @@ class LoginScreen extends ConsumerWidget {
               ),
               Positioned(
                 bottom: 20,
-                right: Platform.isWindows ? 20 : 10,
+                right: Responsive.isDesktop(context) ? 20 : 10,
                 child: InkWell(
                   child: Text(
                     "Quên mật khẩu?",
-                    style: textHeadline1.copyWith(color: Colors.orange, fontSize: Platform.isWindows ? 20 : 14),
+                    style: textHeadline1.copyWith(color: Colors.orange, fontSize: Responsive.isDesktop(context) ? 20 : 14),
                   ),
                   onTap: () {
                     context.push('/forgetpass');
