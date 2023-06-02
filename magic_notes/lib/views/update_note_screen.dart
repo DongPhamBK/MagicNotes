@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -137,7 +135,6 @@ class UpdateNoteScreen extends ConsumerWidget {
                             await showDialog(
                               context: context,
                               builder: (context) {
-                                ref.invalidate(noteListProvider); //Cập nhật lại danh sách
                                 return dialogNotification(context, "KẾT QUẢ", "Cập nhật ghi chú thành công!");
                               },
                             );
@@ -151,7 +148,7 @@ class UpdateNoteScreen extends ConsumerWidget {
                               },
                             );
                           }
-                        }).then((value) => context.goNamed('/home', params: {'userId': USER_ID}));
+                        }).then((value) => context.goNamed('/home', extra: USER_ID));
                       }
                       //context.pop();
                       //var new_note = note.copyWith(noteTitle: noteTitle, noteDescription: noteDescription, noteState: noteState.getState(), noteCreatedTime: DateTime.now().toString());

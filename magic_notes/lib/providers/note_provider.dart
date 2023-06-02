@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:magic_notes/models/data_response.dart';
 import 'package:magic_notes/models/user.dart';
 import 'package:magic_notes/repository/note_repository.dart';
-import 'package:magic_notes/repository/user_repository.dart';
 
 import '../models/note.dart';
 
