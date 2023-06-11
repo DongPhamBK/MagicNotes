@@ -19,7 +19,8 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.refresh(noteListProvider(userId!)); //Cập nhật lại danh sách mỗi khi làm mới trang
+    //ref.refresh(noteListProvider(userId!));
+    // Cập nhật lại danh sách mỗi khi làm mới trang
     final notes = ref.watch(noteListProvider(userId!));
     return Scaffold(
       appBar: AppBar(
