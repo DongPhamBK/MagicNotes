@@ -19,6 +19,7 @@ class NoteNotifier extends ChangeNotifier {
   NoteNotifier({required this.noteRepository});
 
   Future<DataResponse?> searchNotes(String userId, String search) async {
+    DataResponse? dataResponse;
     isLoading = true;
     notifyListeners();
     dataResponse = await noteRepository.searchNotes(userId, search);
@@ -29,6 +30,7 @@ class NoteNotifier extends ChangeNotifier {
   }
 
   Future<DataResponse?> addNote(String userId, Note note) async {
+    DataResponse? dataResponse;
     isLoading = true;
     notifyListeners();
     dataResponse = await noteRepository.addNote(userId, note);
@@ -39,6 +41,7 @@ class NoteNotifier extends ChangeNotifier {
   }
 
   Future<DataResponse?> updateNote(String userId, Note note) async {
+    DataResponse? dataResponse;
     isLoading = true;
     notifyListeners();
     dataResponse = await noteRepository.updateNote(userId, note);
@@ -49,6 +52,7 @@ class NoteNotifier extends ChangeNotifier {
   }
 
   Future<DataResponse?> deleteNote(String userId, String noteId) async {
+    DataResponse? dataResponse;
     isLoading = true;
     notifyListeners();
     dataResponse = await noteRepository.deleteNote(userId, noteId);

@@ -20,6 +20,7 @@ class UserNotifier extends ChangeNotifier {
 
   //Xử lí logIn
   Future<DataResponse?> logIn(User user) async {
+    DataResponse? dataResponse;
     isLoading = true;
     notifyListeners();
     dataResponse = await userRepository.logIn(user);
@@ -30,7 +31,8 @@ class UserNotifier extends ChangeNotifier {
   }
 
   //Xử lí logIn
-  Future<DataResponse?> sigUp(User user) async {
+  Future<DataResponse?> signUp(User user) async {
+    DataResponse? dataResponse;
     isLoading = true;
     notifyListeners();
     dataResponse = await userRepository.signUp(user);
@@ -49,6 +51,7 @@ class UserNotifier extends ChangeNotifier {
 
   //Đổi thông tin người dùng
   Future<DataResponse?> changeUserInfo(String userEmail, String userName, String userDescription) async {
+    DataResponse? dataResponse;
     isLoading = true;
     notifyListeners();
     dataResponse = await userRepository.changeUserInfo(userEmail, userName, userDescription);
@@ -60,6 +63,7 @@ class UserNotifier extends ChangeNotifier {
 
   //Đổi mật khẩu
   Future<DataResponse?> changeUserPassword(String userEmail, String password, String confirmPassword) async {
+    DataResponse? dataResponse;
     isLoading = true;
     notifyListeners();
     dataResponse = await userRepository.changeUserPassword(userEmail, password, confirmPassword);
@@ -72,6 +76,7 @@ class UserNotifier extends ChangeNotifier {
 
   //Reset mật khẩu
   Future<DataResponse?> forgotUserPassword(String userEmail) async {
+    DataResponse? dataResponse;
     isLoading = true;
     notifyListeners();
     dataResponse = await userRepository.forgotUserPassword(userEmail);

@@ -20,17 +20,17 @@ class User {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
-    data['userName'] = this.userName;
-    data['userEmail'] = this.userEmail;
-    data['userPassword'] = this.userPassword;
-    data['userDescription'] = this.userDescription;
+    data['userName'] = userName;
+    data['userEmail'] = userEmail;
+    data['userPassword'] = userPassword;
+    data['userDescription'] = userDescription;
     return data;
   }
 
   Map<String, dynamic> toJsonLogin() {
     final Map<String, dynamic> data = Map<String, dynamic>();
-    data['userEmail'] = this.userEmail;
-    data['userPassword'] = this.userPassword;
+    data['userEmail'] = userEmail;
+    data['userPassword'] = userPassword;
     return data;
   }
 

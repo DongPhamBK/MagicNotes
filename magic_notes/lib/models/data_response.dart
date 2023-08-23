@@ -19,11 +19,11 @@ class DataResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['code'] = this.code;
-    data['status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['code'] = code;
+    data['status'] = status;
     data['data'] = this.data;
-    data['message'] = this.message;
+    data['message'] = message;
     return data;
   }
 

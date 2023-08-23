@@ -29,6 +29,7 @@ class NoteItem extends StatelessWidget {
           ),
           elevation: 10.0,
           shadowColor: Colors.orange,
+          surfaceTintColor: Colors.white,
           child: SizedBox(
             height: 50,
             child: Responsive.isDesktop(context) || Responsive.isTablet(context) ? noteItemWindows() : noteItemMobile(),

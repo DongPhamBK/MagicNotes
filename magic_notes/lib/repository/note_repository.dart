@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:magic_notes/models/data_response.dart';
 import 'package:magic_notes/services/note_services.dart';
@@ -39,7 +41,7 @@ class NoteRepository {
 
 final noteRepositoryPr = Provider<NoteRepository>(
   (ref) {
-    final noteServices = ref.read(noteServicesPr);
+    final noteServices = ref.watch(noteServicesPr);
     return NoteRepository(noteServices: noteServices);
   },
 );

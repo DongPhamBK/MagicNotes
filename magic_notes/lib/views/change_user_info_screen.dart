@@ -11,18 +11,17 @@ import '../utils/style.dart';
 class ChangeUserInfoScreen extends ConsumerWidget {
   late String? userName;
   late String? userDescription;
-  late  TextEditingController userNameController;
+  late TextEditingController userNameController;
   late TextEditingController userDescriptionController;
+
   ChangeUserInfoScreen({
     required this.userName,
     required this.userDescription,
     Key? key,
-  }) : super(key: key){
+  }) : super(key: key) {
     userNameController = TextEditingController(text: userName!);
     userDescriptionController = TextEditingController(text: userDescription!);
   }
-
-
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

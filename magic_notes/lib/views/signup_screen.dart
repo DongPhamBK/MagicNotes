@@ -147,7 +147,7 @@ class SignUpScreen extends ConsumerWidget {
                                 );
                               } else {
                                 User user = User(userName: userName, userEmail: userEmail, userDescription: userDescription, userPassword: password);
-                                ref.read(userProvider).sigUp(user).then(
+                                ref.read(userProvider).signUp(user).then(
                                   (response) {
                                     //print("code ${response!.code}");
                                     if (response!.code == 201) {

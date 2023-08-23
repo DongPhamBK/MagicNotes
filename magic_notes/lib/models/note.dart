@@ -9,8 +9,6 @@ class Note {
 
   Note({this.noteId, this.noteTitle, this.noteDescription, this.noteCreatedTime, this.noteState});
 
-
-
   Note.fromJson(Map<String, dynamic> json) {
     final DateFormat formatter = DateFormat('HH:mm dd-MM-yyyy');
     final toDateTime = DateTime.parse(json['noteCreatedTime']);
@@ -24,28 +22,28 @@ class Note {
 
   Map<String, dynamic> toJsonAddNote() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['noteTitle'] = this.noteTitle;
-    data['noteDescription'] = this.noteDescription;
-    data['noteState'] = this.noteState;
+    data['noteTitle'] = noteTitle;
+    data['noteDescription'] = noteDescription;
+    data['noteState'] = noteState;
     return data;
   }
 
   Map<String, dynamic> toJsonUpdateNote() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['noteId'] = this.noteId;
-    data['noteTitle'] = this.noteTitle;
-    data['noteDescription'] = this.noteDescription;
-    data['noteState'] = this.noteState;
+    data['noteId'] = noteId;
+    data['noteTitle'] = noteTitle;
+    data['noteDescription'] = noteDescription;
+    data['noteState'] = noteState;
     return data;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['noteId'] = this.noteId;
-    data['noteTitle'] = this.noteTitle;
-    data['noteDescription'] = this.noteDescription;
-    data['noteCreatedTime'] = this.noteCreatedTime;
-    data['noteState'] = this.noteState;
+    data['noteId'] = noteId;
+    data['noteTitle'] = noteTitle;
+    data['noteDescription'] = noteDescription;
+    data['noteCreatedTime'] = noteCreatedTime;
+    data['noteState'] = noteState;
     return data;
   }
 
